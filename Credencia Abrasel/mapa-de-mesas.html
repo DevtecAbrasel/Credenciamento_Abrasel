@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa de mesas</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="styles\style-mapa-de-mesas.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <canvas class="orb-canvas"></canvas>
+<!-- partial:index.partial.html -->
+<div class="overlay">
+<div class="controls">
+  <h1>Mapa de mesas</h1>
+  <input placeholder="Adicione os convida aqui  (Use virgula para separar)" type="text" id="guest_names"><button id="add_guests" class="guest_names" for="guest_names">Add convidado</button>
+  <button id="table">Add Mesa</button>
+  <button id="export">Export</button>
+</div>  
+
+
+  <ul id="sortable" class="guests">
+    
+  </ul>
+
+<div id="tables">
+  <ul id="table_1" class="snap_target guests">
+    
+    <p></p>
+    <span contenteditable="true" class="table_number">1</span>
+  </ul>
+</div>
+<div class="export_area">
+  
+  <textarea id="export_text"></textarea>
+  <br style="clear:both">
+</div>
+</div>
+<!-- partial -->
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://code.jquery.com/ui/1.11.0/jquery-ui.js'></script><script  src="mapa-de-mesas.js"></script>
+<script type="module" src="mapa-de-mesas.js"></script>
+</body>
+</html>

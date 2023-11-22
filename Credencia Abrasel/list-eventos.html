@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Eventos </title>
+  <link rel='stylesheet' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/5028/basics_3.css'><link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">       
+    <link rel="stylesheet" href="styles\style-list-eventos.css">
+    <script src="list-eventos.js"></script>
+    <title>Lista de Eventos</title>
+</head>
+<body>
+    <canvas class="orb-canvas"></canvas>
+
+    <table class="responsive-table">
+        
+        <h1>Lista de Eventos</h1>
+        <button id="openModalBtn" class="overlay__btn overlay__btn--colors">Adicionar Evento</button>
+        <br>
+        <thead>
+            <tr>
+                <th scope="col">Nome do Evento</th>
+                <th scope="col">Data</th>
+              <th scope="col">Horario</th>
+                <th scope="col">S/R</th>
+                <th scope="col">Local</th>
+                <th scope="col">Duraçao</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Limite de pessoas</th>
+              <th scope="col">Programação</th>
+              <th scope="col">Lista de convidados</th>
+              <th scope="col">Mapa de mesas</th>
+              <th scope="col">Adicionar recepcionista</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <th scope="row">Evento check-in</th>
+                <td data-title="Data">17/10/2023</td>
+                <td data-title="Horario">15:00-18:00</td>
+                <td data-title="S/R" data-type="currency">Sec</td>
+                <td data-title="Local" data-type="currency">BH</td>
+                <td data-title="Duração" data-type="currency">3 horas</td>
+                <td data-title="Valor" data-type="currency">R$0,00</td>
+                <td data-title="Limite de pessoas" data-type="currency">500</td>
+                <td data-title="Programação" data-type="currency">XXX</td>
+                <td data-title="Lista de convidados" data-type="currency">X</td>
+                <td data-title="Mapa de mesas" data-type="currency"><button class="overlay__btn overlay__btn--colors">
+                    <a href="mapa-de-mesas.html">
+                      Mesas 
+                    </a>
+                  </button></td>
+                  <td data-title="Adicionar recepsionistam" data-type="currency"><button class="overlay__btn overlay__btn--colors">
+                    <a href="add-recep.html">
+                      Recepsionista 
+                    </a>
+                  </button></td>
+            </tr>
+            <!-- Adicione outras linhas da tabela conforme necessário -->
+        </tbody>
+    </table>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <h2>Adicionar Novo Evento</h2>
+            <!-- Formulário para adicionar um novo filme -->
+            <form id="addMovieForm">
+                <br>
+                <label for="movieTitle">Nome do Evento:</label>
+                <input type="text" id="nomeEvento" name="movieTitle" class="text-input" required>
+  <br>
+                <label for="movieReleased">Data:</label>
+                <input type="number" id="data" name="movieReleased" class="text-input" required>
+  <br>
+                <label for="movieStudio">Horario:</label>
+                <input type="text" id="horario" name="movieStudio" class="text-input" required>
+  <br>
+                <label for="movieWorldwideGross">S/R:</label>
+                <input type="text" id="sR" name="movieWorldwideGross" class="text-input" required>
+  <br>
+                <label for="movieDomesticGross">Local:</label>
+                <input type="text" id="local" name="movieDomesticGross" class="text-input" required>
+  <br>
+                <label for="movieForeignGross">Duração:</label>
+                <input type="text" id="duracao" name="movieForeignGross" class="text-input" required>
+  <br>
+                <label for="movieBudget">Valor:</label>
+                <input type="text" id="valor" name="movieBudget" class="text-input" required>
+                <br>
+               <label for="movieBudget">Limite de pessoas:</label>
+                <input type="text" id="limitePessoas" name="movieBudget" class="text-input" required>
+                <br>
+                <div class="input-file-container"> Programação:
+                <input type="file" id="programacao" name="movieBudget" class="input-file input-file-trigger" required>
+                <label for="movieBudget" class="input-file-trigger overlay__btn overlay__btn--colors">Adicionar documento</label>
+                </input>
+            </div>
+                <br>
+
+                <div > Lista de Convidados:
+                <input type="file" id="convidados" name="movieBudget" class="input-file" required>
+                <label for="movieBudget" class="input-file-trigger overlay__btn overlay__btn--colors" >Adicionar documento</label>
+                </input>
+                </div>
+<br>
+<br>
+                <button type="submit" class="overlay__btn overlay__btn--colors">Adicionar</button>
+            </form> 
+        </div>
+    </div>
+
+</body>
+</html>
+<!-- partial -->
+<script type="module" src="list-eventos.js"></script>
+
+</body>
+</html>

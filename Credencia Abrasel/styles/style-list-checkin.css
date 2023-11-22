@@ -1,0 +1,169 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,500,200);
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #181818;
+  color: #777e86;
+  font-family: 'Raleway', sans-serif;
+}
+
+h1, h2 {
+  color: #777e86;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 200;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+h2 {
+  font-size: 0.9em;
+  margin-bottom: 2em;
+}
+
+section {
+  width: 50%;
+  margin: 100px auto;
+  text-align: center;
+}
+@media (max-width: 1600px) {
+  section {
+    width: 50%;
+  }
+}
+@media (max-width: 1250px) {
+  section {
+    width: 70%;
+  }
+}
+@media (max-width: 850px) {
+  section {
+    width: 90%;
+  }
+}
+
+.checkbox {
+  height: 70px;
+  width: 45%;
+  position: relative;
+  background: #fff;
+  display: inline-block;
+  margin: 15px 2% 15px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0 1px #252730;
+  cursor: pointer;
+}
+@media (max-width: 850px) {
+  .checkbox {
+    width: 80%;
+  }
+}
+.checkbox:hover {
+  background: #30c076;
+  color: white;
+}
+.checkbox:nth-child(1) .face {
+  background: url("https://s3.amazonaws.com/uifaces/faces/twitter/csswizardry/73.jpg");
+  background-size: cover;
+}
+.checkbox:nth-child(2) .face {
+  background: url("https://s3.amazonaws.com/uifaces/faces/twitter/kolage/73.jpg");
+  background-size: cover;
+}
+.checkbox:nth-child(3) .face {
+  background: url("https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/73.jpg");
+  background-size: cover;
+}
+.checkbox:nth-child(4) .face {
+  background: url("https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/73.jpg");
+  background-size: cover;
+}
+
+.figure-container {
+  width: 20%;
+  height: 100%;
+  float: left;
+  padding: 10px 0 10px 15px;
+}
+@media (max-width: 450px) {
+  .figure-container {
+    width: 30%;
+  }
+}
+.figure-container .figure {
+  background: transparent;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px white;
+}
+
+.text {
+  width: 80%;
+  height: 100%;
+  margin-left: 20%;
+  text-align: left;
+  position: relative;
+  padding: 30px 10px;
+}
+@media (max-width: 450px) {
+  .text {
+    width: 70%;
+    margin-left: 30%;
+  }
+}
+.text span {
+  position: absolute;
+  left: 10px;
+}
+
+.submit {
+  width: 60%;
+  height: 60px;
+  margin: 30px auto;
+  background: #30c076;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0 1px #252730;
+  cursor: pointer;
+}
+.submit .text {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+.submit .text span {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.submit:hover {
+  background: #2bac69;
+}
+
+.clicked {
+  background: #30c076 !important;
+  color: white;
+}
+
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+  font-size: 2.3em;
+  line-height: 50px;
+}
+
+.orb-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
