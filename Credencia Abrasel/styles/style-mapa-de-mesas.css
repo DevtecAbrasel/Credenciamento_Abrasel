@@ -199,12 +199,17 @@ input#guest_names {
   color: #232323;
   padding: 0 10px;
   min-width: 15%;
+  color: var(--light-color);
+  background: var(--dark-color);
 }
 
 button {
   line-height: 2.2;
 }
-
+:root {
+  --dark-color: hsl(var(--hue), 100%, 9%);
+  --light-color: hsl(var(--hue), 95%, 98%);
+}
 #table {
   background-color: #93f55e;
   color: #232323;
@@ -213,6 +218,8 @@ button {
   border: 0px;
   margin-left: 2.5%;
   min-width: 15%;
+  color: var(--light-color);
+  background: var(--dark-color);
 }
 
 #export {
@@ -225,9 +232,8 @@ button {
 
 .export_area {
   clear: both;
-  width: 105%;
-  margin-left: -2.5%;
-  border-top: 1px solid #ddd;
+  width: 100%;
+  border-top: 1px solid #000000;
   margin-top: 50px;
   padding: 20px 0 30px;
 }
@@ -279,7 +285,6 @@ input::placeholder {
 
 .overlay {
   max-width: 1140px;
-  max-height: 640px;
   align-items: center;
   background: rgba(255, 255, 255, 0.375);
   box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);

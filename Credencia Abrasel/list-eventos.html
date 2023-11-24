@@ -5,11 +5,15 @@
   <title>Lista de Eventos </title>
   <link rel='stylesheet' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/5028/basics_3.css'><link rel="stylesheet" href="./style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">       
@@ -22,7 +26,7 @@
 
     <table class="responsive-table">
         
-        <h1>Lista de Eventos</h1>
+        <h1 class="overlay__title">Lista de Eventos</h1>
         <button id="openModalBtn" class="overlay__btn overlay__btn--colors">Adicionar Evento</button>
         <br>
         <thead>
@@ -56,8 +60,14 @@
                 <td data-title="Duração" data-type="currency">3 horas</td>
                 <td data-title="Valor" data-type="currency">R$0,00</td>
                 <td data-title="Limite de pessoas" data-type="currency">500</td>
-                <td data-title="Programação" data-type="currency">XXX</td>
-                <td data-title="Lista de convidados" data-type="currency">X</td>
+                <td data-title="Programação" data-type="currency"><button type="button" data-dl>
+                  <span class="dl-icon"></span><span>Baixar</span>
+                </button></td>
+                <td data-title="Lista de convidados" data-type="currency">
+                  <button type="button" data-dl>
+                    <span class="dl-icon"></span><span>Baixar</span>
+                  </button>
+                </td>
                 <td data-title="Mapa de mesas" data-type="currency"><button class="overlay__btn overlay__btn--colors">
                     <a href="mapa-de-mesas.html">
                       Mesas 
@@ -111,7 +121,7 @@
             </div>
                 <br>
 
-                <div > Lista de Convidados:
+                <div> Lista de Convidados:
                 <input type="file" id="convidados" name="movieBudget" class="input-file" required>
                 <label for="movieBudget" class="input-file-trigger overlay__btn overlay__btn--colors" >Adicionar documento</label>
                 </input>

@@ -1,3 +1,7 @@
+html{
+  height: 110%;
+}
+
 body {
   background-color: #181818;
   font-family: "lato", sans-serif;
@@ -129,6 +133,7 @@ border: 1px solid rgba(255, 255, 255, 0.125);
 @media only screen and (max-width: 567px) {
   .form-container{
     padding-bottom: 15px;
+    margin-top: -120px;
   }
   .form-container .form-icon{
     width: 100%;
