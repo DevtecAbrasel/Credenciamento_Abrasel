@@ -9,5 +9,5 @@ const HOST: string = process.env.HOST || "localhost";
 connectDatabase();
 
 server.listen(stringToNumber(PORT), HOST, () => {
-    console.log(`Server listening on address http://${HOST}:${PORT}`);
+  console.log(`Server listening on address \x1b[34m\x1b[4m%s\x1b[0m`, `http://${HOST}:${PORT}`);
 });

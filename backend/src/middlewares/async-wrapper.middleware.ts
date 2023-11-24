@@ -3,7 +3,11 @@
  *
  */
 export function asyncWrapper(fn: any) {
-  return function (req: any, res: any, next: any) {
-    fn(req, res, next).catch((error: any) => next(error));
+  return async function (req: any, res: any, next: any) {
+    try {
+      return await fn(req, res, next);
+    } catch (error: any) {
+      next(error);
+    }
   };
 }

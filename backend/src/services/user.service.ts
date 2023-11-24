@@ -1,4 +1,4 @@
-import { CreationAttributes } from "sequelize";
+import { CreationAttributes, Transaction } from "sequelize";
 
 import { User, UserDTO } from "../interfaces/user.interface.js";
 import { UserModel } from "../models/user.model.js";
@@ -26,7 +26,7 @@ class UserService {
   }
 
   // POST
-  public async create(userParams: Omit<User, "id">): Promise<UserDTO> {
+  public async create(userParams: Omit<User, "id">, t?: Transaction): Promise<UserDTO> {
     let userParamsNoId: CreationAttributes<User> = (({ name, email, password }) => ({
       name,
       email,
@@ -34,12 +34,12 @@ class UserService {
     }))(userParams);
 
     userParamsNoId.password = hashPassword(userParamsNoId.password);
-    const user: User = await UserModel.create(userParamsNoId);
+    const user: User = await UserModel.create(userParamsNoId, { transaction: t });
     return { id: user.id, name: user.name, email: user.email };
   }
 
   // PUT
-  public async update(userParams: User): Promise<UserDTO> {
+  public async update(userParams: User, t?: Transaction): Promise<UserDTO> {
     let userParamsNoPassword: CreationAttributes<User> = (({ password: _, ...rest }) => ({
       ...rest,
     }))(userParams);
@@ -55,7 +55,7 @@ class UserService {
       throw new Error("O usuário não foi encontrado.");
     }
 
-    if (userParamsNoPassword.email !== userFound.email) {
+    if (!!userParamsNoPassword.email && userParamsNoPassword.email !== userFound.email) {
       const userSameEmail = await this.findByField("email", userParamsNoPassword.email);
 
       if (userSameEmail) {
@@ -63,7 +63,14 @@ class UserService {
       }
     }
 
-    const [count] = await UserModel.update(userParamsNoPassword, { where: { id: userParamsNoPassword.id } });
+    const [count] = await UserModel.update(userParamsNoPassword, {
+      where: { id: userParamsNoPassword.id },
+      transaction: t,
+    });
+
+    if (count == 1) {
+      throw new Error("Erro rollback!");
+    }
 
     if (count != 1) {
       throw new Error("Erro no update!");
@@ -72,12 +79,12 @@ class UserService {
     return { id: userParamsNoPassword.id, name: userParamsNoPassword.name, email: userParamsNoPassword.email };
   }
 
-  public async deleteById(id: number): Promise<number> {
-    const count = await UserModel.destroy({ where: { id }});
+  public async deleteById(id: number, t?: Transaction): Promise<number> {
+    const count = await UserModel.destroy({ where: { id }, transaction: t });
 
-    if(count == 0) {
+    if (count == 0) {
       throw new Error("Usuário não existe");
-    } 
+    }
 
     return count;
   }

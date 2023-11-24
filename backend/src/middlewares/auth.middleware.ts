@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 async function authorization(req: any, res: any, next: any): Promise<any> | never {
   // const token = req.cookies["SIGN_IN_COOKIE"];
 
-  console.log(req.headers["authorization"]);
   let bearerToken: string = req.headers["authorization"];
 
   const errorStatus: number = 401;

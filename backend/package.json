@@ -37,9 +37,12 @@
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/cls-hooked": "^4.3.8",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/sequelize": "^4.28.19",
     "bcrypt": "^5.1.1",
+    "chalk": "^5.3.0",
+    "cls-hooked": "^4.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
