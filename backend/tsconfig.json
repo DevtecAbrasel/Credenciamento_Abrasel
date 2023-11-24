@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "lib": ["ES2022", "DOM"],
+    "target": "ES2022",
+    "declarationMap": true,
+    "sourceMap": true,
+    "importsNotUsedAsValues": "remove",
+    "isolatedModules": true,
+    "esModuleInterop": true
+  },
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true,
+    "files": true,
+    "experimentalResolver": true
+  },
+  "include": ["./src/**/*.ts", "env.d.ts"]
+}
