@@ -1,0 +1,8 @@
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+const LETTERS_AND_NUMBERS = LETTERS + '0123456789';
+
+export {
+  LETTERS,
+  LETTERS_AND_NUMBERS
+}

@@ -8,16 +8,16 @@ import { isNumeric } from "#utils/string.util.js";
 class ManagerService {
   // GET
   public async findAll(): Promise<ManagerDTO[]> {
-    const user: ManagerDTO[] = await ManagerModel.findAll({
+    const manager: ManagerDTO[] = await ManagerModel.findAll({
       attributes: { exclude: ["password", "createdAt", "updatedAt"] },
     });
-    return user;
+    return manager;
   }
 
   public async findById(id: number, returnPassword: boolean = false): Promise<ManagerDTO | null> {
     const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
-    const user: ManagerDTO | null = await ManagerModel.findOne({ where: { id: id }, ...attrPassword });
-    return user;
+    const manager: ManagerDTO | null = await ManagerModel.findOne({ where: { id: id }, ...attrPassword });
+    return manager;
   }
 
   public async findByField(
@@ -26,60 +26,60 @@ class ManagerService {
     returnPassword: boolean = false
   ): Promise<ManagerDTO | null> {
     const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
-    const user: ManagerDTO | null = await ManagerModel.findOne({ where: { [field]: value }, ...attrPassword });
-    return user;
+    const manager: ManagerDTO | null = await ManagerModel.findOne({ where: { [field]: value }, ...attrPassword });
+    return manager;
   }
 
   // POST
-  public async create(userParams: Manager, t?: Transaction): Promise<ManagerDTO> {
-    let userParamsNoId: CreationAttributes<Manager> = (({ id: _, ...rest }) => ({
+  public async create(managerParams: Manager, t?: Transaction): Promise<ManagerDTO> {
+    let managerParamsNoId: CreationAttributes<Manager> = (({ id: _, ...rest }) => ({
       ...rest,
-    }))(userParams);
+    }))(managerParams);
 
-    userParamsNoId.password = hashPassword(userParamsNoId.password);
-    const user: Manager = await ManagerModel.create(userParamsNoId, { transaction: t });
-    return { id: user.id, name: user.name, email: user.email, origin: user.origin };
+    managerParamsNoId.password = hashPassword(managerParamsNoId.password);
+    const manager: Manager = await ManagerModel.create(managerParamsNoId, { transaction: t });
+    return { id: manager.id, name: manager.name, email: manager.email, origin: manager.origin };
   }
 
   // PUT
-  public async update(userParams: Manager, t?: Transaction): Promise<ManagerDTO> {
-    let userParamsNoPassword: CreationAttributes<Manager> = (({ password: _, ...rest }) => ({
+  public async update(managerParams: Manager, t?: Transaction): Promise<ManagerDTO> {
+    let managerParamsNoPassword: CreationAttributes<Manager> = (({ password: _, ...rest }) => ({
       ...rest,
-    }))(userParams);
+    }))(managerParams);
 
     // Validação do update
-    if (!userParamsNoPassword.id) {
-      throw new Error("O usuário não possuí id.");
+    if (!managerParamsNoPassword.id) {
+      throw new Error("A requisição não possuí o id do gerente.");
     }
 
-    const userFound = await this.findById(userParamsNoPassword.id);
+    const managerFound = await this.findById(managerParamsNoPassword.id);
 
-    if (!userFound) {
-      throw new Error("O usuário não foi encontrado.");
+    if (!managerFound) {
+      throw new Error("O gerente não foi encontrado.");
     }
 
-    if (!!userParamsNoPassword.email && userParamsNoPassword.email !== userFound.email) {
-      const userSameEmail = await this.findByField("email", userParamsNoPassword.email);
+    if (!!managerParamsNoPassword.email && managerParamsNoPassword.email !== managerFound.email) {
+      const managerSameEmail = await this.findByField("email", managerParamsNoPassword.email);
 
-      if (userSameEmail) {
+      if (managerSameEmail) {
         throw new Error("Email já existe.");
       }
     }
 
-    const [count] = await ManagerModel.update(userParamsNoPassword, {
-      where: { id: userParamsNoPassword.id },
+    const [count] = await ManagerModel.update(managerParamsNoPassword, {
+      where: { id: managerParamsNoPassword.id },
       transaction: t,
     });
 
     if (count != 1) {
-      throw new Error("Erro no update!");
+      throw new Error("Erro na atualização do gerente!");
     }
 
     return {
-      id: userParamsNoPassword.id,
-      name: userParamsNoPassword.name,
-      email: userParamsNoPassword.email,
-      origin: userParamsNoPassword.origin,
+      id: managerParamsNoPassword.id,
+      name: managerParamsNoPassword.name,
+      email: managerParamsNoPassword.email,
+      origin: managerParamsNoPassword.origin,
     };
   }
 
@@ -88,14 +88,14 @@ class ManagerService {
       throw new Error("O valor de id não é numérico!");
     }
 
-    const user = await Manager.findByPk(id);
+    const manager = await Manager.findByPk(id);
     const count = await ManagerModel.destroy({ where: { id }, transaction: t });
 
     if (count < 1) {
-      throw new Error("Usuário não existe");
+      throw new Error("O gerente não existe");
     }
 
-    return user!.email;
+    return manager!.email;
   }
 }
 

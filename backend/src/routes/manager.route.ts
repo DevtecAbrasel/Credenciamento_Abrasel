@@ -9,19 +9,19 @@ const router = Router();
 router.get(
   "/",
   asyncWrapper(async (_: unknown, res: any) => {
-    const users = await managerService.findAll();
-    res.status(200).send(users);
+    const managers = await managerService.findAll();
+    res.status(200).send(managers);
   })
 );
 
 router.post(
   "/",
   composedWrapper(async (req: any, res: any, t: Transaction) => {
-    const userParams = req.body;
-    const user = await managerService.create(userParams, t);
+    const managerParams = req.body;
+    const manager = await managerService.create(managerParams, t);
     res.status(200).send({
-      msg: "Usuário criado com sucesso",
-      user,
+      msg: "Genrente criado com sucesso",
+      manager,
     });
   })
 );
@@ -29,11 +29,11 @@ router.post(
 router.put(
   "/",
   composedWrapper(async (req: any, res: any, t: Transaction) => {
-    const userParams = req.body;
-    const user = await managerService.update(userParams, t);
+    const managerParams = req.body;
+    const manager = await managerService.update(managerParams, t);
     res.status(200).send({
-      msg: "Usuário atualizado com sucesso",
-      user,
+      msg: "Genrente atualizado com sucesso",
+      manager,
     });
   })
 );
@@ -41,11 +41,11 @@ router.put(
 router.delete(
   "/",
   composedWrapper(async (req: any, res: any, t: Transaction) => {
-    const userParams = req.body;
-    const id = (!!userParams?.id)? userParams.id : userParams;
+    const managerParams = req.body;
+    const id = (!!managerParams?.id)? managerParams.id : managerParams;
     const email = await managerService.deleteById(id, t);
     res.status(200).send({
-      msg: "Usuário deletado com sucesso",
+      msg: "Genrente deletado com sucesso",
       email,
     });
   })

@@ -16,8 +16,9 @@
     "npm": "^10.1.0"
   },
   "scripts": {
-    "dev": "set ENVIRONMENT=development && nodemon -e \"ts,json\" --watch \"src/**\" --exec \"node -r ts-node/register/transpile-only -r tsconfig-paths/register --import ./lib/register-ts-node-esm.mjs\" src/server.ts",
-    "dev:debug": "set ENVIRONMENT=development && nodemon --inspect=127.0.0.1:9229 -e \"ts,json\" --watch \"src/**\" --exec \"node -r ts-node/register/transpile-only -r tsconfig-paths/register --import ./lib/register-ts-node-esm.mjs\" src/server.ts",
+    "start": "hello.bat && set ENVIRONMENT=production && node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/server.js",
+    "dev": "set ENVIRONMENT=development && nodemon -e \"ts,json\" --watch \"src/**\" --exec \"node --import ./lib/register-ts-node-esm.mjs\" src/server.ts",
+    "dev:debug": "set ENVIRONMENT=development && nodemon --inspect=127.0.0.1:9229 -e \"ts,json\" --watch \"src/**\" --exec \"node --import ./lib/register-ts-node-esm.mjs\" src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -56,6 +57,7 @@
   },
   "imports": {
     "#config/*": "./src/config/*",
+    "#constants/*": "./src/constants/*",
     "#databases/*": "./src/databases/*",
     "#interfaces/*": "./src/interfaces/*",
     "#middlewares/*": "./src/middlewares/*",
