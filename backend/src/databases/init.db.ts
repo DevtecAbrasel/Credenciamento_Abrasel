@@ -1,4 +1,4 @@
-import { sqliteConnection } from "./sqlite.db.js";
+import { sqliteConnection } from "#databases/sqlite.db.js";
 
 export const connectDatabase = async () => {
   try {

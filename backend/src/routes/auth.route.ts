@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { asyncWrapper } from "../middlewares/async-wrapper.middleware.js";
-import authService from "../services/auth.service.js";
+import { asyncWrapper } from "#middlewares/async-wrapper.middleware.js";
+import authService from "#services/auth.service.js";
 
 const router = Router();
 

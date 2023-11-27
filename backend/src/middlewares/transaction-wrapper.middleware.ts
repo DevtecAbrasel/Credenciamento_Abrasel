@@ -1,7 +1,7 @@
 /**
  * Wrapper para encapsular o gerenciamento de transações por rota
  */
-import { sqliteConnection } from "../databases/sqlite.db.js";
+import { sqliteConnection } from "#databases/sqlite.db.js";
 
 export function transactionWrapper(fn: any) {
   return async function (req: any, res: any, next: any) {

@@ -53,5 +53,15 @@
     "nodemon": "^3.0.1",
     "sequelize": "^6.35.1",
     "sqlite3": "^5.1.6"
+  },
+  "imports": {
+    "#config/*": "./src/config/*",
+    "#databases/*": "./src/databases/*",
+    "#interfaces/*": "./src/interfaces/*",
+    "#middlewares/*": "./src/middlewares/*",
+    "#models/*": "./src/models/*",
+    "#routes/*": "./src/routes/*",
+    "#services/*": "./src/services/*",
+    "#utils/*": "./src/utils/*"
   }
 }

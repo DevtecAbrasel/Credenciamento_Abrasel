@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { Transaction } from "sequelize";
-import { asyncWrapper } from "../middlewares/async-wrapper.middleware.js";
-import { composedWrapper } from "../middlewares/wrapper-composer.middleware.js";
-import managerService from "../services/manager.service.js";
+import { asyncWrapper } from "#middlewares/async-wrapper.middleware.js";
+import { composedWrapper } from "#middlewares/wrapper-composer.middleware.js";
+import managerService from "#services/manager.service.js";
 
 const router = Router();
 
@@ -42,10 +42,11 @@ router.delete(
   "/",
   composedWrapper(async (req: any, res: any, t: Transaction) => {
     const userParams = req.body;
-    const quantity = await managerService.deleteById(userParams, t);
+    const id = (!!userParams?.id)? userParams.id : userParams;
+    const email = await managerService.deleteById(id, t);
     res.status(200).send({
       msg: "Usuário deletado com sucesso",
-      quantidade: quantity,
+      email,
     });
   })
 );

@@ -5,6 +5,7 @@ export class Manager extends Model {
   declare public email: string;
   declare public name: string;
   declare public password: string;
+  declare public origin: string; // Nacional/Seccional/Regional
 }
 
 export interface ManagerDTO {
@@ -12,4 +13,5 @@ export interface ManagerDTO {
   email: string;
   name: string;
   password?: string;
+  origin: string;
 }

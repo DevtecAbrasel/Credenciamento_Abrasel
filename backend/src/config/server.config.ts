@@ -5,8 +5,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { config } from "dotenv";
 
-import router from "../routes/router.js";
-import { exceptionHandler } from "../middlewares/exception-handler.middleware.js";
+import router from "#routes/router.js";
+import { exceptionHandler } from "#middlewares/exception-handler.middleware.js";
 
 config(); // Inicializando .env
 
