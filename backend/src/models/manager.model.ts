@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sqliteConnection } from "../databases/sqlite.db.js";
-import { User } from "../interfaces/user.interface.js";
+import { Manager } from "../interfaces/manager.interface.js";
 
-export const UserModel = User.init({
+export const ManagerModel = Manager.init({
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -23,7 +23,7 @@ export const UserModel = User.init({
         allowNull: false
     }
 }, {
-    tableName: "user",
-    modelName: "User",
+    tableName: "manager",
+    modelName: "Manager",
     sequelize: sqliteConnection
 });

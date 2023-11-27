@@ -1,46 +1,50 @@
 import { CreationAttributes, Transaction } from "sequelize";
 
-import { User, UserDTO } from "../interfaces/user.interface.js";
-import { UserModel } from "../models/user.model.js";
+import { Manager, ManagerDTO } from "../interfaces/manager.interface.js";
+import { ManagerModel } from "../models/manager.model.js";
 import { hashPassword } from "../utils/password.utils.js";
 
-class UserService {
+class ManagerService {
   // GET
-  public async findAll(): Promise<UserDTO[]> {
-    const user: UserDTO[] = await UserModel.findAll({
+  public async findAll(): Promise<ManagerDTO[]> {
+    const user: ManagerDTO[] = await ManagerModel.findAll({
       attributes: { exclude: ["password", "createdAt", "updatedAt"] },
     });
     return user;
   }
 
-  public async findById(id: number, returnPassword: boolean = false): Promise<UserDTO | null> {
+  public async findById(id: number, returnPassword: boolean = false): Promise<ManagerDTO | null> {
     const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
-    const user: UserDTO | null = await UserModel.findOne({ where: { id: id }, ...attrPassword });
+    const user: ManagerDTO | null = await ManagerModel.findOne({ where: { id: id }, ...attrPassword });
     return user;
   }
 
-  public async findByField(field: string, value: any, returnPassword: boolean = false): Promise<UserDTO | null> {
+  public async findByField(
+    field: string,
+    value: any,
+    returnPassword: boolean = false
+  ): Promise<ManagerDTO | null> {
     const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
-    const user: UserDTO | null = await UserModel.findOne({ where: { [field]: value }, ...attrPassword });
+    const user: ManagerDTO | null = await ManagerModel.findOne({ where: { [field]: value }, ...attrPassword });
     return user;
   }
 
   // POST
-  public async create(userParams: Omit<User, "id">, t?: Transaction): Promise<UserDTO> {
-    let userParamsNoId: CreationAttributes<User> = (({ name, email, password }) => ({
+  public async create(userParams: Omit<Manager, "id">, t?: Transaction): Promise<ManagerDTO> {
+    let userParamsNoId: CreationAttributes<Manager> = (({ name, email, password }) => ({
       name,
       email,
       password,
     }))(userParams);
 
     userParamsNoId.password = hashPassword(userParamsNoId.password);
-    const user: User = await UserModel.create(userParamsNoId, { transaction: t });
+    const user: Manager = await ManagerModel.create(userParamsNoId, { transaction: t });
     return { id: user.id, name: user.name, email: user.email };
   }
 
   // PUT
-  public async update(userParams: User, t?: Transaction): Promise<UserDTO> {
-    let userParamsNoPassword: CreationAttributes<User> = (({ password: _, ...rest }) => ({
+  public async update(userParams: Manager, t?: Transaction): Promise<ManagerDTO> {
+    let userParamsNoPassword: CreationAttributes<Manager> = (({ password: _, ...rest }) => ({
       ...rest,
     }))(userParams);
 
@@ -63,7 +67,7 @@ class UserService {
       }
     }
 
-    const [count] = await UserModel.update(userParamsNoPassword, {
+    const [count] = await ManagerModel.update(userParamsNoPassword, {
       where: { id: userParamsNoPassword.id },
       transaction: t,
     });
@@ -80,7 +84,7 @@ class UserService {
   }
 
   public async deleteById(id: number, t?: Transaction): Promise<number> {
-    const count = await UserModel.destroy({ where: { id }, transaction: t });
+    const count = await ManagerModel.destroy({ where: { id }, transaction: t });
 
     if (count == 0) {
       throw new Error("Usuário não existe");
@@ -90,4 +94,4 @@ class UserService {
   }
 }
 
-export default new UserService();
+export default new ManagerService();

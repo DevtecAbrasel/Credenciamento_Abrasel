@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { comparePassword } from "../utils/password.utils.js";
-import UserService from "./user.service.js";
+import UserService from "./manager.service.js";
 
 class AuthService {
   public async authenticate(login: any): Promise<string | null> {
