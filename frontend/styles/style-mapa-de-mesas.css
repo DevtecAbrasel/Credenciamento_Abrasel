@@ -135,7 +135,7 @@ h1 span {
 
 .snap_target {
   position: relative;
-  min-height: 130px;
+  min-height: 100%;
   padding: 10px 5px 45px 5px;
   width: 30%;
   float: left;
