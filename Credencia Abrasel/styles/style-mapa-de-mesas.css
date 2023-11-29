@@ -13,6 +13,7 @@ body {
   font-family: var(--font-family);
   color: var(--dark-color);
   background: #181818;
+  
 }
 
 
@@ -110,8 +111,8 @@ h1 span {
   border-radius: 3px;
   overflow: hidden;
   vertical-align: middle;
-  max-width: 150px;
-  min-width: 20%;
+  max-width: 100%;
+  min-width: 90%;
   flex-basis: auto;
   flex-shrink: 0.25;
   flex-grow: 2;
@@ -125,7 +126,7 @@ h1 span {
 }
 
 #draggable {
-  width: 100%;
+  width: 100%; 
 }
 
 #tables {
@@ -136,14 +137,15 @@ h1 span {
 
 .snap_target {
   position: relative;
-  min-height: 130px;
+  min-height: 100%;
   padding: 10px 5px 45px 5px;
-  width: 30%;
+  min-width: 45%;
+  width: 200px;
   float: left;
   background-color: #d0d0d0;
   border-radius: 20px;
   margin-left: 2%;
-  color: #464646;
+  color: #2c2c2c;
   border: 2px solid transparent;
   padding-bottom: 40px;
   transition: height 200ms ease-in-out;
