@@ -17,16 +17,23 @@ export const RecepcionistModel = Recepcionist.init(
     cellphone: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: "login"
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     // Event (1-N) Recepcionist (Since every login is Unique)
+    event: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: "login"
+    }
   },
   {
     tableName: "recepcionist",
     modelName: "Recepcionist",
+    schema: "public",
     sequelize: sqliteConnection,
   }
 );

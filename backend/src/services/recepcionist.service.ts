@@ -15,23 +15,37 @@ class ManagerService {
   }
 
   public async findById(id: number, returnPassword: boolean = false): Promise<RecepcionistDTO | null> {
-    const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
+    let excludeAttrs = ["createdAt", "updatedAt"];
+    if (!returnPassword) excludeAttrs.push("password");
     const recepcionist: RecepcionistDTO | null = await RecepcionistModel.findOne({
       where: { id: id },
-      ...attrPassword,
+      attributes: {
+        exclude: excludeAttrs,
+      },
     });
     return recepcionist;
   }
 
-  public async findByField(
-    field: string,
-    value: any,
-    returnPassword: boolean = false
-  ): Promise<RecepcionistDTO | null> {
-    const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
+  public async findByField(field: string, value: any, returnPassword: boolean = false): Promise<RecepcionistDTO | null> {
+    let excludeAttrs = ["createdAt", "updatedAt"];
+    if (!returnPassword) excludeAttrs.push("password");
     const recepcionist: RecepcionistDTO | null = await RecepcionistModel.findOne({
       where: { [field]: value },
-      ...attrPassword,
+      attributes: {
+        exclude: excludeAttrs,
+      },
+    });
+    return recepcionist;
+  }
+
+  public async findByFields(whereValues: object, returnPassword: boolean = false): Promise<RecepcionistDTO | null> {
+    let excludeAttrs = ["createdAt", "updatedAt"];
+    if (!returnPassword) excludeAttrs.push("password");
+    const recepcionist: RecepcionistDTO | null = await RecepcionistModel.findOne({
+      where: { ...whereValues },
+      attributes: {
+        exclude: excludeAttrs,
+      },
     });
     return recepcionist;
   }
@@ -47,7 +61,12 @@ class ManagerService {
 
     const recepcionist: Recepcionist = await RecepcionistModel.create(recepcionistParamsNoId, { transaction: t });
 
-    return { id: recepcionist.id, name: recepcionist.name, cellphone: recepcionist.cellphone, password: randomPassword };
+    return {
+      id: recepcionist.id,
+      name: recepcionist.name,
+      cellphone: recepcionist.cellphone,
+      password: randomPassword,
+    };
   }
 
   // PUT

@@ -7,11 +7,15 @@ class AuthService {
   public async authenticate(login: any): Promise<string | null> {
     let user, identifier = null;
     
+    if(!login.email && (!login.cellphone || !login.event)) {
+      throw new Error("Estão faltando credenciais!");
+    }
+
     if(!!login.email) {
       user = await ManagerService.findByField("email", login.email, true);
       identifier = { email: login.email };
     } else if (!!login.cellphone) {
-      user = await recepcionistService.findByField("cellphone", login.cellphone, true);
+      user = await recepcionistService.findByFields({ cellphone: login.cellphone, event: login.event }, true);
       identifier = { cellphone: login.cellphone };
     }
     

@@ -31,6 +31,7 @@ export const ManagerModel = Manager.init(
   {
     tableName: "manager",
     modelName: "Manager",
+    schema: "public",
     sequelize: sqliteConnection,
   }
 );

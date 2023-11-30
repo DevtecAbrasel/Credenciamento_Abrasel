@@ -5,7 +5,7 @@ export const connectDatabase = async () => {
     await sqliteConnection.authenticate();
     sqliteConnection.sync({ alter: true })
   } catch (error: any) {
-    console.error("Erro em conectar ao banco! ", error);
+    console.error("Erro em conectar ao banco!", error);
   }
 };
 
