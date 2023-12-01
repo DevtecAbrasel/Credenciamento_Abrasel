@@ -4,36 +4,55 @@ import { Recepcionist, RecepcionistDTO } from "#interfaces/recepcionist.interfac
 import { RecepcionistModel } from "#models/recepcionist.model.js";
 import { generateRandomPassword, hashPassword } from "#utils/password.utils.js";
 import { isNumeric } from "#utils/string.util.js";
+import { EventModel } from "../models/event.model.js";
 
 class ManagerService {
   // GET
   public async findAll(): Promise<RecepcionistDTO[]> {
     const recepcionist: RecepcionistDTO[] = await RecepcionistModel.findAll({
-      attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+      attributes: { exclude: ["eventId", "password", "createdAt", "updatedAt"] },
+      include: [
+        {
+          model: EventModel,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+        },
+      ],
     });
     return recepcionist;
   }
 
   public async findById(id: number, returnPassword: boolean = false): Promise<RecepcionistDTO | null> {
-    let excludeAttrs = ["createdAt", "updatedAt"];
+    let excludeAttrs = ["eventId", "createdAt", "updatedAt"];
     if (!returnPassword) excludeAttrs.push("password");
     const recepcionist: RecepcionistDTO | null = await RecepcionistModel.findOne({
       where: { id: id },
       attributes: {
         exclude: excludeAttrs,
       },
+      include: [
+        {
+          model: EventModel,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+        },
+      ],
     });
     return recepcionist;
   }
 
   public async findByFields(whereValues: object, returnPassword: boolean = false): Promise<Array<RecepcionistDTO> | null> {
-    let excludeAttrs = ["createdAt", "updatedAt"];
+    let excludeAttrs = ["eventId", "createdAt", "updatedAt"];
     if (!returnPassword) excludeAttrs.push("password");
     const recepcionist: Array<RecepcionistDTO> | null = await RecepcionistModel.findAll({
       where: { ...whereValues },
       attributes: {
         exclude: excludeAttrs,
       },
+      include: [
+        {
+          model: EventModel,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+        },
+      ],
     });
     return recepcionist;
   }
@@ -47,15 +66,15 @@ class ManagerService {
     const randomPassword = generateRandomPassword(10);
     recepcionistParamsNoId.password = hashPassword(randomPassword);
 
-    const recepcionist: Recepcionist = await RecepcionistModel.create(recepcionistParamsNoId, { transaction: t });
+    const recepcionist: RecepcionistDTO = (
+      await RecepcionistModel.create(recepcionistParamsNoId, {
+        transaction: t,
+      })
+    ).dataValues;
 
-    return {
-      id: recepcionist.id,
-      name: recepcionist.name,
-      cellphone: recepcionist.cellphone,
-      password: randomPassword,
-      event: recepcionist.event,
-    };
+    const { password: _, ...recepcionistFiltered } = recepcionist;
+
+    return recepcionistFiltered;
   }
 
   // PUT
@@ -104,13 +123,13 @@ class ManagerService {
       id: recepcionistParamsNoPassword.id,
       name: recepcionistParamsNoPassword.name,
       cellphone: recepcionistParamsNoPassword.cellphone,
-      event: recepcionistParamsNoPassword.event,
+      eventId: recepcionistParamsNoPassword.eventId,
     };
   }
 
   public async deleteById(id: number, t?: Transaction): Promise<RecepcionistDTO> {
     console.log(id);
-    if(!id) {
+    if (!id) {
       throw new Error("Não foi enviado o id do recepcionista!");
     }
 
@@ -125,7 +144,7 @@ class ManagerService {
       throw new Error("O recepcionista não existe");
     }
 
-    return { id: recepcionist!.id, cellphone: recepcionist!.cellphone, event: recepcionist!.event };
+    return { id: recepcionist!.id, cellphone: recepcionist!.cellphone, eventId: recepcionist!.eventId };
   }
 }
 

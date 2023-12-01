@@ -4,6 +4,7 @@ import { authorization } from "#middlewares/auth.middleware.js";
 import authRouter from "#routes/auth.route.js";
 import managerRouter from "#routes/manager.route.js";
 import recepcionistRouter from "#routes/recepcionist.route.js";
+import eventRouter from "#routes/event.route.js"
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use("/auth", authRouter);
 
 router.use("/manager", shouldAuth, managerRouter);
 router.use("/recepcionist", shouldAuth, recepcionistRouter);
+router.use("/event", shouldAuth, eventRouter);
 
 export default router;
