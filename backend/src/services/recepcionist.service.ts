@@ -26,22 +26,10 @@ class ManagerService {
     return recepcionist;
   }
 
-  public async findByField(field: string, value: any, returnPassword: boolean = false): Promise<RecepcionistDTO | null> {
+  public async findByFields(whereValues: object, returnPassword: boolean = false): Promise<Array<RecepcionistDTO> | null> {
     let excludeAttrs = ["createdAt", "updatedAt"];
     if (!returnPassword) excludeAttrs.push("password");
-    const recepcionist: RecepcionistDTO | null = await RecepcionistModel.findOne({
-      where: { [field]: value },
-      attributes: {
-        exclude: excludeAttrs,
-      },
-    });
-    return recepcionist;
-  }
-
-  public async findByFields(whereValues: object, returnPassword: boolean = false): Promise<RecepcionistDTO | null> {
-    let excludeAttrs = ["createdAt", "updatedAt"];
-    if (!returnPassword) excludeAttrs.push("password");
-    const recepcionist: RecepcionistDTO | null = await RecepcionistModel.findOne({
+    const recepcionist: Array<RecepcionistDTO> | null = await RecepcionistModel.findAll({
       where: { ...whereValues },
       attributes: {
         exclude: excludeAttrs,
@@ -66,6 +54,7 @@ class ManagerService {
       name: recepcionist.name,
       cellphone: recepcionist.cellphone,
       password: randomPassword,
+      event: recepcionist.event,
     };
   }
 
@@ -86,6 +75,22 @@ class ManagerService {
       throw new Error("O recepcionista não foi encontrado.");
     }
 
+    if (
+      recepcionistParamsNoPassword.cellphone !== recepcionistFound.cellphone ||
+      recepcionistParamsNoPassword.event !== recepcionistFound.event
+    ) {
+      let parameters = {
+        cellphone: recepcionistParamsNoPassword.cellphone ? recepcionistParamsNoPassword.cellphone : recepcionistFound.cellphone,
+        event: recepcionistParamsNoPassword.event ? recepcionistParamsNoPassword.event : recepcionistFound.event,
+      };
+
+      const recepcionistSameKeys = await this.findByFields(parameters);
+
+      if (recepcionistSameKeys?.length && recepcionistSameKeys.length > 0) {
+        throw new Error("Recepcionista com par de celular e evento já existe.");
+      }
+    }
+
     const [count] = await RecepcionistModel.update(recepcionistParamsNoPassword, {
       where: { id: recepcionistParamsNoPassword.id },
       transaction: t,
@@ -99,10 +104,16 @@ class ManagerService {
       id: recepcionistParamsNoPassword.id,
       name: recepcionistParamsNoPassword.name,
       cellphone: recepcionistParamsNoPassword.cellphone,
+      event: recepcionistParamsNoPassword.event,
     };
   }
 
-  public async deleteById(id: number, t?: Transaction): Promise<string> {
+  public async deleteById(id: number, t?: Transaction): Promise<RecepcionistDTO> {
+    console.log(id);
+    if(!id) {
+      throw new Error("Não foi enviado o id do recepcionista!");
+    }
+
     if (!isNumeric(id as any)) {
       throw new Error("O valor de id não é numérico!");
     }
@@ -114,7 +125,7 @@ class ManagerService {
       throw new Error("O recepcionista não existe");
     }
 
-    return recepcionist!.cellphone;
+    return { id: recepcionist!.id, cellphone: recepcionist!.cellphone, event: recepcionist!.event };
   }
 }
 

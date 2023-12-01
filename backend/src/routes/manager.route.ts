@@ -42,8 +42,7 @@ router.delete(
   "/",
   composedWrapper(async (req: any, res: any, t: Transaction) => {
     const managerParams = req.body;
-    const id = (!!managerParams?.id)? managerParams.id : managerParams;
-    const email = await managerService.deleteById(id, t);
+    const email = await managerService.deleteById(managerParams?.id, t);
     res.status(200).send({
       msg: "Genrente deletado com sucesso",
       email,

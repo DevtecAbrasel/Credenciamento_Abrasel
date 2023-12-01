@@ -5,11 +5,13 @@ export class Recepcionist extends Model {
   declare public cellphone: string;
   declare public name: string;
   declare public password: string;
+  declare public event: string;
 }
 
 export interface RecepcionistDTO {
   id: number;
   cellphone: string;
-  name: string;
+  name?: string;
   password?: string;
+  event: string;
 }

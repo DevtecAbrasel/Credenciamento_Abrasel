@@ -12,22 +12,22 @@ class AuthService {
     }
 
     if(!!login.email) {
-      user = await ManagerService.findByField("email", login.email, true);
+      user = await ManagerService.findByFields({ email: login.email }, true);
       identifier = { email: login.email };
     } else if (!!login.cellphone) {
       user = await recepcionistService.findByFields({ cellphone: login.cellphone, event: login.event }, true);
       identifier = { cellphone: login.cellphone };
     }
     
-    if (!user) {
+    if (!user || user.length == 0) {
       return null;
     }
 
-    if (!comparePassword(login.password, user.password!)) {
+    if (!comparePassword(login.password, user[0]!.password!)) {
       return null;
     }
 
-    return jwt.sign({ user: { name: user.name, ...identifier } }, process.env.SECRET_KEY, {
+    return jwt.sign({ user: { name: user[0]!.name, ...identifier } }, process.env.SECRET_KEY, {
       audience: "credenciamento",
       expiresIn: "3h",
     });

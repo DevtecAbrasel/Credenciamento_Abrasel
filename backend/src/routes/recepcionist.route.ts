@@ -41,12 +41,11 @@ router.put(
 router.delete(
   "/",
   composedWrapper(async (req: any, res: any, t: Transaction) => {
-    const recepcionistParams = req.body;
-    const id = !!recepcionistParams?.id ? recepcionistParams.id : recepcionistParams;
-    const email = await recepcionistService.deleteById(id, t);
+    const recepcionistParams = req.body;;
+    const recepcionist = await recepcionistService.deleteById(recepcionistParams?.id, t);
     res.status(200).send({
       msg: "Recepicionista deletado com sucesso",
-      email,
+      ...recepcionist,
     });
   })
 );

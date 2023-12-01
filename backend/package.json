@@ -16,9 +16,10 @@
     "npm": "^10.1.0"
   },
   "scripts": {
-    "start": "hello.bat && set ENVIRONMENT=production && node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/server.js",
-    "dev": "set ENVIRONMENT=development && nodemon -e \"ts,json\" --watch \"src/**\" --exec \"node --import ./lib/register-ts-node-esm.mjs\" src/server.ts",
+    "start": "set ENVIRONMENT=production && node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/server.js",
+    "dev": "set ENVIRONMENT=development && nodemon --delay 1500ms -e \"ts,json\" --watch \"src/**\" --exec \"node --import ./lib/register-ts-node-esm.mjs\" src/server.ts",
     "dev:debug": "set ENVIRONMENT=development && nodemon --inspect=127.0.0.1:9229 -e \"ts,json\" --watch \"src/**\" --exec \"node --import ./lib/register-ts-node-esm.mjs\" src/server.ts",
+    "dev:node": "set ENVIRONMENT=development && node --import ./lib/register-ts-node-esm.mjs src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -32,6 +33,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
+    "@types/nodemon": "^1.19.6",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.3.2"

@@ -15,19 +15,27 @@ class ManagerService {
   }
 
   public async findById(id: number, returnPassword: boolean = false): Promise<ManagerDTO | null> {
-    const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
-    const manager: ManagerDTO | null = await ManagerModel.findOne({ where: { id: id }, ...attrPassword });
+    let excludeAttrs = ["createdAt", "updatedAt"];
+    if (!returnPassword) excludeAttrs.push("password");
+    const manager: ManagerDTO | null = await ManagerModel.findOne({
+      where: { id: id },
+      attributes: {
+        exclude: excludeAttrs,
+      },
+    });
     return manager;
   }
 
-  public async findByField(
-    field: string,
-    value: any,
-    returnPassword: boolean = false
-  ): Promise<ManagerDTO | null> {
-    const attrPassword = returnPassword ? {} : { attributes: { exclude: ["password"] } };
-    const manager: ManagerDTO | null = await ManagerModel.findOne({ where: { [field]: value }, ...attrPassword });
-    return manager;
+  public async findByFields(whereValues: object, returnPassword: boolean = false): Promise<Array<ManagerDTO> | null> {
+    let excludeAttrs = ["createdAt", "updatedAt"];
+    if (!returnPassword) excludeAttrs.push("password");
+    const Managers: Array<ManagerDTO> | null = await ManagerModel.findAll({
+      where: { ...whereValues },
+      attributes: {
+        exclude: excludeAttrs,
+      },
+    });
+    return Managers;
   }
 
   // POST
@@ -59,10 +67,10 @@ class ManagerService {
     }
 
     if (!!managerParamsNoPassword.email && managerParamsNoPassword.email !== managerFound.email) {
-      const managerSameEmail = await this.findByField("email", managerParamsNoPassword.email);
+      const managerSameEmail = await this.findByFields({ email: "email" });
 
-      if (managerSameEmail) {
-        throw new Error("Email já existe.");
+      if (managerSameEmail?.length && managerSameEmail.length > 0) {
+        throw new Error("Gerente com este email já existe.");
       }
     }
 
@@ -84,6 +92,10 @@ class ManagerService {
   }
 
   public async deleteById(id: number, t?: Transaction): Promise<string> {
+    if(!id) {
+      throw new Error("Não foi enviado o id do gerente!");
+    }
+    
     if (!isNumeric(id as any)) {
       throw new Error("O valor de id não é numérico!");
     }
