@@ -4,12 +4,17 @@ import { Event, EventDTO } from "#interfaces/event.interface.js";
 import { EventModel } from "#models/event.model.js";
 import { isNumeric } from "#utils/string.util.js";
 import { stringToDate } from "#utils/date.utils.js";
+import { RecepcionistModel } from "../models/recepcionist.model.js";
 
 class EventService {
   // GET
   public async findAll(): Promise<EventDTO[]> {
     const event: EventDTO[] = await EventModel.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
+      include: {
+        model: RecepcionistModel,
+        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+      },
     });
     return event;
   }
@@ -73,8 +78,8 @@ class EventService {
     const startDateString: any = eventParams.start;
     const finishDateString: any = eventParams.finish;
 
-    eventParams.start = (eventParams.start)? stringToDate(startDateString): undefined;
-    eventParams.finish = (eventParams.finish)? stringToDate(finishDateString): undefined;
+    eventParams.start = eventParams.start ? stringToDate(startDateString) : undefined;
+    eventParams.finish = eventParams.finish ? stringToDate(finishDateString) : undefined;
 
     const [count] = await EventModel.update(eventParams, {
       where: { id: eventParams.id },

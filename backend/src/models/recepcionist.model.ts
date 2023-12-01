@@ -35,7 +35,6 @@ export const RecepcionistModel = Recepcionist.init(
       },
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
-      
     },
   },
   {
@@ -46,8 +45,14 @@ export const RecepcionistModel = Recepcionist.init(
   }
 );
 
-Recepcionist.belongsTo(EventModel, {
+EventModel.hasMany(RecepcionistModel, {
   foreignKey: {
     name: "eventId"
   }
-})
+});
+
+Recepcionist.belongsTo(EventModel, {
+  foreignKey: {
+    name: "eventId",
+  },
+});

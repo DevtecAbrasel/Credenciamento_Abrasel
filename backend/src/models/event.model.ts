@@ -1,6 +1,6 @@
-import { DataTypes } from "sequelize";
 import { sqliteConnection } from "#databases/sqlite.db.js";
 import { Event } from "#interfaces/event.interface.js";
+import { DataTypes } from "sequelize";
 
 export const EventModel = Event.init(
   {
