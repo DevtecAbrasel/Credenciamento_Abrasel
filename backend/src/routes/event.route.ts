@@ -20,7 +20,7 @@ router.post(
     const eventParams = req.body;
     const event = await eventService.create(eventParams, t);
     res.status(200).send({
-      msg: "Recepicionista criado com sucesso",
+      msg: "Evento criado com sucesso",
       event,
     });
   })
@@ -32,7 +32,7 @@ router.put(
     const eventParams = req.body;
     const event = await eventService.update(eventParams, t);
     res.status(200).send({
-      msg: "Recepicionista atualizado com sucesso",
+      msg: "Evento atualizado com sucesso",
       event,
     });
   })
@@ -44,7 +44,7 @@ router.delete(
     const eventParams = req.body;;
     const event = await eventService.deleteById(eventParams?.id, t);
     res.status(200).send({
-      msg: "Recepicionista deletado com sucesso",
+      msg: "Evento deletado com sucesso",
       ...event,
     });
   })

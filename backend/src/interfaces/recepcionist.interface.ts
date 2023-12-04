@@ -7,7 +7,7 @@ export class Recepcionist extends Model {
   declare public name: string;
   declare public password: string;
   declare public eventId: number;
-  declare public event?: Event;
+  declare public event: Event;
 }
 
 export interface RecepcionistDTO {

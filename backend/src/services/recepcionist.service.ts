@@ -4,7 +4,7 @@ import { Recepcionist, RecepcionistDTO } from "#interfaces/recepcionist.interfac
 import { RecepcionistModel } from "#models/recepcionist.model.js";
 import { generateRandomPassword, hashPassword } from "#utils/password.utils.js";
 import { isNumeric } from "#utils/string.util.js";
-import { EventModel } from "../models/event.model.js";
+import { EventModel } from "#models/event.model.js";
 
 class ManagerService {
   // GET

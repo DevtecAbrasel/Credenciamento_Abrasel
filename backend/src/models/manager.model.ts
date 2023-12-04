@@ -1,4 +1,5 @@
 import { DataTypes } from "sequelize";
+
 import { sqliteConnection } from "#databases/sqlite.db.js";
 import { Manager } from "#interfaces/manager.interface.js";
 
@@ -31,7 +32,7 @@ export const ManagerModel = Manager.init(
   {
     tableName: "manager",
     modelName: "Manager",
-    schema: "public",
+    schema: "checkin",
     sequelize: sqliteConnection,
   }
 );

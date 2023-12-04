@@ -1,10 +1,9 @@
 import { DataTypes } from "sequelize";
 
 import { sqliteConnection } from "#databases/sqlite.db.js";
-import { Event } from "#interfaces/event.interface.js";
-import { InviteeModel } from "#models/invitee.model.js";
+import { Invitee } from "#interfaces/invitee.interface.js";
 
-export const EventModel = Event.init(
+export const InviteeModel = Invitee.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,37 +11,37 @@ export const EventModel = Event.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    start: {
-      type: DataTypes.DATE,
+    cellphone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    company: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    finish: {
-      type: DataTypes.DATE,
+    role: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
-    location: {
+    uf: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
   {
-    tableName: "event",
-    modelName: "Event",
+    tableName: "invitee",
+    modelName: "Invitee",
     schema: "checkin",
     sequelize: sqliteConnection,
   }
 );
-
-EventModel.belongsToMany(InviteeModel, {
-  through: "event_invitee",
-  uniqueKey: "eventId",
-});
-
-InviteeModel.belongsToMany(EventModel, {
-  through: "event_invitee",
-  uniqueKey: "inviteeId",
-});

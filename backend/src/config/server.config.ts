@@ -31,6 +31,12 @@ server.use(limiter);
 
 server.use("/v1", router);
 
+server.use("*", (_,res) => {
+  res.status(404).send({
+    msg: "A página não foi encontrada!"
+  })
+})
+
 server.use(exceptionHandler);
 
 export default server;

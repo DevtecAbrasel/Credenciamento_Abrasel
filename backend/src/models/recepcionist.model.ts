@@ -1,7 +1,8 @@
+import { DataTypes } from "sequelize";
+
 import { sqliteConnection } from "#databases/sqlite.db.js";
 import { Recepcionist } from "#interfaces/recepcionist.interface.js";
-import { DataTypes } from "sequelize";
-import { EventModel } from "./event.model.js";
+import { EventModel } from "#models/event.model.js";
 
 export const RecepcionistModel = Recepcionist.init(
   {
@@ -40,15 +41,15 @@ export const RecepcionistModel = Recepcionist.init(
   {
     tableName: "recepcionist",
     modelName: "Recepcionist",
-    schema: "credenciamento",
+    schema: "checkin",
     sequelize: sqliteConnection,
   }
 );
 
 EventModel.hasMany(RecepcionistModel, {
   foreignKey: {
-    name: "eventId"
-  }
+    name: "eventId",
+  },
 });
 
 Recepcionist.belongsTo(EventModel, {

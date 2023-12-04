@@ -3,7 +3,7 @@ import { sqliteConnection } from "#databases/sqlite.db.js";
 export const connectDatabase = async () => {
   try {
     await sqliteConnection.authenticate();
-    sqliteConnection.sync({ alter: true })
+    // sqliteConnection.sync({ force: true })
   } catch (error: any) {
     console.error("Erro em conectar ao banco!", error);
   }

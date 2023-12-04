@@ -4,7 +4,7 @@ import { Event, EventDTO } from "#interfaces/event.interface.js";
 import { EventModel } from "#models/event.model.js";
 import { isNumeric } from "#utils/string.util.js";
 import { stringToDate } from "#utils/date.utils.js";
-import { RecepcionistModel } from "../models/recepcionist.model.js";
+import { RecepcionistModel } from "#models/recepcionist.model.js";
 
 class EventService {
   // GET
@@ -19,9 +19,8 @@ class EventService {
     return event;
   }
 
-  public async findById(id: number, returnPassword: boolean = false): Promise<EventDTO | null> {
+  public async findById(id: number): Promise<EventDTO | null> {
     let excludeAttrs = ["createdAt", "updatedAt"];
-    if (!returnPassword) excludeAttrs.push("password");
     const event: EventDTO | null = await EventModel.findOne({
       where: { id: id },
       attributes: {
