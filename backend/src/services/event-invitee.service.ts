@@ -6,7 +6,27 @@ class EventInviteeService {
       throw new Error("Parâmetros faltando para a função");
     }
 
-    const entity: any = await (model as any).findByPk(id, { attributes: { exclude: ["createdAt", "updatedAt", "event_invitee"] } });
+    // FIXME: verificar a possibilidade de consultar a tabela mxn para facilitar a query
+    const alreadyExist = await (model as any).findAll({
+      attributes: ["id"],
+      where: { id },
+      include: {
+        model: sourceInstance.constructor,
+        attributes: ["id"],
+        where: { id: sourceInstance?.dataValues?.id },
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
+    if(alreadyExist?.length > 0) {
+      throw new Error("Convidado já adicionado ao evento!");
+    }
+
+    const entity: any = await (model as any).findByPk(id, {
+      attributes: { exclude: ["createdAt", "updatedAt", "event_invitee"] },
+    });
 
     if (!entity) {
       throw new Error("Entidade não encontrada");
