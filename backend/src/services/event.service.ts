@@ -6,6 +6,7 @@ import { isNumeric } from "#utils/string.util.js";
 import { stringToDate } from "#utils/date.utils.js";
 import { RecepcionistModel } from "#models/recepcionist.model.js";
 import { InviteeModel } from "../models/invitee.model.js";
+import eventInviteeService from "./event-invitee.service.js";
 
 class EventService {
   // GET
@@ -13,28 +14,33 @@ class EventService {
     const excludeAttrs = ["createdAt", "updatedAt"];
     const event: EventDTO[] = await EventModel.findAll({
       attributes: { exclude: excludeAttrs },
-      include: [{
-        model: RecepcionistModel,
-        attributes: { exclude: [...excludeAttrs, "password"] },
-      }, {
-        model: InviteeModel,
-        attributes: { exclude: excludeAttrs },
-        through: {
-          attributes: []
-        }
-      }],
+      include: [
+        {
+          model: RecepcionistModel,
+          attributes: { exclude: [...excludeAttrs, "password"] },
+        },
+        {
+          model: InviteeModel,
+          attributes: { exclude: excludeAttrs },
+          through: {
+            attributes: [],
+          },
+        },
+      ],
     });
     return event;
   }
 
   public async findById(id: number): Promise<EventDTO | null> {
     let excludeAttrs = ["createdAt", "updatedAt"];
-    const event: EventDTO | null = (await EventModel.findOne({
-      where: { id: id },
-      attributes: {
-        exclude: excludeAttrs,
-      },
-    }))?.dataValues;
+    const event: EventDTO | null = (
+      await EventModel.findOne({
+        where: { id: id },
+        attributes: {
+          exclude: excludeAttrs,
+        },
+      })
+    )?.dataValues;
     return event;
   }
 
@@ -106,6 +112,7 @@ class EventService {
     };
   }
 
+  // DELETE
   public async deleteById(id: number, t?: Transaction): Promise<EventDTO> {
     if (!id) {
       throw new Error("Não foi enviado o id do evento!");
@@ -123,6 +130,46 @@ class EventService {
     }
 
     return { id: event!.id, name: event!.name, location: event!.location };
+  }
+
+  // Extra CRUD
+  public async addInvitee(eventId: number, inviteeId?: number, inviteeEmail?: string): Promise<any> {
+    if ((!inviteeId && !inviteeEmail) || !eventId) {
+      throw new Error("Parâmetros insuficientes!");
+    }
+    const inviteeWhere = inviteeId ? { id: inviteeId } : { email: inviteeEmail };
+
+    const invitee = (await InviteeModel.findOne({ where: inviteeWhere, attributes: { exclude: ["createdAt", "updatedAt"] } }))
+      ?.dataValues;
+
+    if (!invitee) {
+      throw new Error("O convidado não existe.");
+    }
+
+    await eventInviteeService.add(eventId, invitee?.id);
+
+    const event: EventDTO | null = await this.findById(eventId);
+
+    return { ...event, invitee: { ...invitee } };
+  }
+
+  public async removeInvitee(eventId: number, inviteeId?: number, inviteeEmail?: string, t?: Transaction) {
+    if ((!inviteeId && !inviteeEmail) || !eventId) {
+      throw new Error("Parâmetros insuficientes!");
+    }
+    const inviteeWhere = inviteeId ? { id: inviteeId } : { email: inviteeEmail };
+
+    const invitee = (await InviteeModel.findOne({ where: inviteeWhere, attributes: ["id", "email"] }))?.dataValues;
+
+    if (!invitee) {
+      throw new Error("O convidado não existe.");
+    }
+
+    await eventInviteeService.remove(eventId, invitee?.id, t);
+
+    const event: EventDTO | null = await this.findById(eventId);
+
+    return { ...event, invitee: { ...invitee } };
   }
 }
 

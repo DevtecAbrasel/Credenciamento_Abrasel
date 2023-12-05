@@ -22,7 +22,7 @@ class EventInviteeService {
     } catch (error: any) {
       //FIXME: Ajustar um padrão com o middleware para não perder o erro original,
       // mas ao mesmo tempo enviar uma mensagem mais humanizada.
-      throw new Error("Não foi possível associar o evento ao convidado\n", error);
+      throw new Error("Não foi possível associar o evento ao convidado", error);
     }
 
     return entity.dataValues;
