@@ -9,13 +9,21 @@ class EventInviteeService {
 
     const connection = sqliteConnection.models;
 
-    const alreadyExist = await connection.event_invitee?.findAll({ where: { EventId: eventId, InviteeId: inviteeId } });
+    const alreadyExist = await connection.event_invitee?.findAll({ where: { eventId, inviteeId } });
 
     if (alreadyExist && alreadyExist?.length > 0) {
       throw new Error("Convidado já adicionado ao evento!");
     }
 
-    const entity: any = await connection.event_invitee?.create({ EventId: eventId, InviteeId: inviteeId }, { transaction: t });
+    let entity: any = {};
+
+    try {
+      entity = await connection.event_invitee?.create({ eventId, inviteeId }, { transaction: t });
+    } catch (error: any) {
+      //FIXME: Ajustar um padrão com o middleware para não perder o erro original,
+      // mas ao mesmo tempo enviar uma mensagem mais humanizada.
+      throw new Error("Não foi possível associar o evento ao convidado\n", error);
+    }
 
     return entity.dataValues;
   }
@@ -27,8 +35,8 @@ class EventInviteeService {
 
     const count = await sqliteConnection.models.event_invitee?.destroy({
       where: {
-        EventId: eventId,
-        InviteeId: inviteeId,
+        eventId,
+        inviteeId,
       },
       transaction: t,
     });

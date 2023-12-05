@@ -5,16 +5,24 @@ import { EventModel } from "#models/event.model.js";
 import { isNumeric } from "#utils/string.util.js";
 import { stringToDate } from "#utils/date.utils.js";
 import { RecepcionistModel } from "#models/recepcionist.model.js";
+import { InviteeModel } from "../models/invitee.model.js";
 
 class EventService {
   // GET
   public async findAll(): Promise<EventDTO[]> {
+    const excludeAttrs = ["createdAt", "updatedAt"];
     const event: EventDTO[] = await EventModel.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-      include: {
+      attributes: { exclude: excludeAttrs },
+      include: [{
         model: RecepcionistModel,
-        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
-      },
+        attributes: { exclude: [...excludeAttrs, "password"] },
+      }, {
+        model: InviteeModel,
+        attributes: { exclude: excludeAttrs },
+        through: {
+          attributes: []
+        }
+      }],
     });
     return event;
   }

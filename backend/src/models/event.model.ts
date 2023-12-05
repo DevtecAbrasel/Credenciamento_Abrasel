@@ -40,9 +40,11 @@ export const EventModel = Event.init(
 EventModel.belongsToMany(InviteeModel, {
   through: "event_invitee",
   uniqueKey: "eventId",
+  foreignKey: "eventId"
 });
 
 InviteeModel.belongsToMany(EventModel, {
   through: "event_invitee",
   uniqueKey: "inviteeId",
+  foreignKey: "inviteeId"
 });

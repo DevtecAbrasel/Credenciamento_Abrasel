@@ -3,10 +3,10 @@ import { CreationAttributes, Transaction } from "sequelize";
 import { Invitee, InviteeDTO } from "#interfaces/invitee.interface.js";
 import { InviteeModel } from "#models/invitee.model.js";
 import { isNumeric } from "#utils/string.util.js";
-import { Event } from "../interfaces/event.interface.js";
-import { EventModel } from "../models/event.model.js";
-import eventInviteeService from "./event-invitee.service.js";
-import eventService from "./event.service.js";
+import { EventDTO } from "#interfaces/event.interface.js";
+import { EventModel } from "#models/event.model.js";
+import eventInviteeService from "#services/event-invitee.service.js";
+import eventService from "#services/event.service.js";
 
 class InviteeService {
   // GET
@@ -55,12 +55,12 @@ class InviteeService {
 
     const { createdAt: a, updateAt: b, ...inviteeFiltered } = invitee.dataValues;
 
-    let event: Event | Object = {};
+    let event: EventDTO | null = null;
 
     try {
       if (!!inviteeParams.eventId) {
-        await eventInviteeService.add(inviteeParams.eventId, inviteeFiltered.id);
-        event = eventService.findById(inviteeParams.eventId);
+        await eventInviteeService.add(inviteeParams.eventId, inviteeFiltered.id, t);
+        event = await eventService.findById(inviteeParams.eventId);
       }
     } catch (error: any) {
       throw error;
@@ -97,6 +97,7 @@ class InviteeService {
     };
   }
 
+  // DELETE
   public async deleteById(id: number, t?: Transaction): Promise<InviteeDTO> {
     if (!id) {
       throw new Error("Não foi enviado o id do convidado!");
@@ -116,8 +117,7 @@ class InviteeService {
     return { id: invitee!.id, email: invitee!.email };
   }
 
-  // Funções não CRUD
-
+  // Extra CRUD
   public async addEvent(eventId: number, inviteeId?: number, inviteeEmail?: string): Promise<any> {
     if ((!inviteeId && !inviteeEmail) || !eventId) {
       throw new Error("Parâmetros insuficientes!");
@@ -126,10 +126,14 @@ class InviteeService {
 
     const invitee = (await InviteeModel.findOne({ where: inviteeWhere, attributes: { exclude: ["createdAt", "updatedAt"] } }))
       ?.dataValues;
+     
+    if (!invitee) {
+      throw new Error("O convidado não existe.");
+    }
 
     await eventInviteeService.add(eventId, invitee?.id);
 
-    const event = eventService.findById(eventId);
+    const event: EventDTO | null = await eventService.findById(eventId);
 
     return { ...invitee, event: { ...event } };
   }
@@ -148,7 +152,7 @@ class InviteeService {
 
     await eventInviteeService.remove(eventId, invitee?.dataValues.id, t);
 
-    const event = await eventService.findById(eventId);
+    const event: EventDTO | null = await eventService.findById(eventId);
 
     return { ...invitee.dataValues, event: { ...event } };
   }
