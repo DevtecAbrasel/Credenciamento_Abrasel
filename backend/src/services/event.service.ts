@@ -21,12 +21,12 @@ class EventService {
 
   public async findById(id: number): Promise<EventDTO | null> {
     let excludeAttrs = ["createdAt", "updatedAt"];
-    const event: EventDTO | null = await EventModel.findOne({
+    const event: EventDTO | null = (await EventModel.findOne({
       where: { id: id },
       attributes: {
         exclude: excludeAttrs,
       },
-    });
+    }))?.dataValues;
     return event;
   }
 

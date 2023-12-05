@@ -3,9 +3,10 @@ import { CreationAttributes, Transaction } from "sequelize";
 import { Invitee, InviteeDTO } from "#interfaces/invitee.interface.js";
 import { InviteeModel } from "#models/invitee.model.js";
 import { isNumeric } from "#utils/string.util.js";
+import { Event } from "../interfaces/event.interface.js";
 import { EventModel } from "../models/event.model.js";
 import eventInviteeService from "./event-invitee.service.js";
-import { Event } from "../interfaces/event.interface.js";
+import eventService from "./event.service.js";
 
 class InviteeService {
   // GET
@@ -58,7 +59,8 @@ class InviteeService {
 
     try {
       if (!!inviteeParams.eventId) {
-        event = await eventInviteeService.add(invitee, "addEvent", inviteeParams.eventId, EventModel, t);
+        await eventInviteeService.add(inviteeParams.eventId, inviteeFiltered.id);
+        event = eventService.findById(inviteeParams.eventId);
       }
     } catch (error: any) {
       throw error;
@@ -122,11 +124,33 @@ class InviteeService {
     }
     const inviteeWhere = inviteeId ? { id: inviteeId } : { email: inviteeEmail };
 
-    const invitee = await InviteeModel.findOne({ where: inviteeWhere, attributes: { exclude: ["createdAt", "updatedAt"] } });
+    const invitee = (await InviteeModel.findOne({ where: inviteeWhere, attributes: { exclude: ["createdAt", "updatedAt"] } }))
+      ?.dataValues;
 
-    const event = await eventInviteeService.add(invitee, "addEvent", eventId, EventModel);
+    await eventInviteeService.add(eventId, invitee?.id);
 
-    return { ...invitee?.dataValues, event: { ...event } };
+    const event = eventService.findById(eventId);
+
+    return { ...invitee, event: { ...event } };
+  }
+
+  public async removeEvent(eventId: number, inviteeId?: number, inviteeEmail?: string, t?: Transaction) {
+    if ((!inviteeId && !inviteeEmail) || !eventId) {
+      throw new Error("Parâmetros insuficientes!");
+    }
+    const inviteeWhere = inviteeId ? { id: inviteeId } : { email: inviteeEmail };
+
+    const invitee = await InviteeModel.findOne({ where: inviteeWhere, attributes: ["id", "email"] });
+
+    if (!invitee) {
+      throw new Error("O convidado não existe.");
+    }
+
+    await eventInviteeService.remove(eventId, invitee?.dataValues.id, t);
+
+    const event = await eventService.findById(eventId);
+
+    return { ...invitee.dataValues, event: { ...event } };
   }
 }
 

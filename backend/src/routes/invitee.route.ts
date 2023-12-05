@@ -62,4 +62,16 @@ router.post(
   })
 );
 
+router.post(
+  "/removeEvent",
+  composedWrapper(async (req: any, res: any) => {
+    const reqParams = req.body;
+    const invitee = await inviteeService.removeEvent(reqParams.eventId, reqParams.inviteeId, reqParams.inviteeEmail);
+    res.status(200).send({
+      msg: "Convidado removido do evento com sucesso",
+      invitee
+    });
+  })
+);
+
 export default router;
