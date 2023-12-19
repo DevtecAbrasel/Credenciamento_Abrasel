@@ -85,7 +85,7 @@ constructor() {
 
 setColors() {
   // Escolhe um matiz (hue) aleatório entre 220 e 360
-  this.hue = ~~random(220, 360);
+  this.hue = ~~random(210, 210);
   this.complimentaryHue1 = this.hue + 30;
   this.complimentaryHue2 = this.hue + 60;
   // Define uma saturação e luminosidade fixas
