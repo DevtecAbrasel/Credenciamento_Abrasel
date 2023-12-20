@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>Lista de check-in</title>
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-  <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'>
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"rel="stylesheet"/>
   <link rel="stylesheet" href="styles/style-list-checkin.css">
   <style>
     /* Adicione estilos adicionais conforme necessário */
@@ -19,6 +19,15 @@
   </style>
 </head>
 <body>
+
+  <div class="all">
+    <div class="buttons">
+      <div class="one">
+        <a href="login.html"><button class="curve overlay__btn overlay__btn--colors">Sair</button></a>
+      </div>
+    </div>
+  </div>
+
   <canvas class="orb-canvas"></canvas>
 
   <section>
@@ -36,7 +45,12 @@
           <div class="figure face"></div>
         </div>
         <div class="text">
-          <span>Convidado 1</span>
+          <span>Convidado 1
+            <br>
+            Cargo,
+            Empresa,
+            Mesa
+          </span>
         </div>
       </div>
       <div class="checkbox">
@@ -44,7 +58,12 @@
           <div class="figure face"></div>
         </div>
         <div class="text">
-          <span>Convidado 2</span>
+          <span>Convidado 2
+            <br>
+            Cargo,
+            Empresa,
+            Mesa
+          </span>
         </div>
       </div>
       <div class="checkbox">
@@ -52,7 +71,12 @@
           <div class="figure face"></div>  
         </div>
         <div class="text"> 
-          <span>Convidado 3</span>
+          <span>Convidado 3
+            <br>
+            Cargo,
+            Empresa,
+            Mesa
+          </span>
         </div>
       </div>
       <div class="checkbox">
@@ -60,7 +84,12 @@
           <div class="figure face"></div>
         </div>
         <div class="text">
-          <span>Convidado 4</span> 
+          <span>Convidado 4
+            <br>
+            Cargo,
+            Empresa,
+            Mesa
+          </span> 
         </div> 
       </div>
     </div>
@@ -71,3 +100,4 @@
   <script type="module" src="list-checkin.js"></script>
 </body>
 </html>
+ 
