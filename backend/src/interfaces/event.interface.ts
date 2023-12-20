@@ -8,6 +8,7 @@ export class Event extends Model {
   public declare location: string;
   public declare price: number;
   public declare inviteeLimit: number;
+  public declare origin: string;
   public declare createdAt: Date;
   public declare updatedAt: Date;
 }
@@ -20,4 +21,5 @@ export interface EventDTO {
   location?: string;
   price?: number;
   attendantLimit?: number;
+  origin?: string;
 }

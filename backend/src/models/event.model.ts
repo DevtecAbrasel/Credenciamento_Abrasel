@@ -36,6 +36,9 @@ export const EventModel = Event.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    origin: {
+      type: DataTypes.STRING,
+    },
   },
   {
     tableName: "event",
