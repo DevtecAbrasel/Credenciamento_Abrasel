@@ -1,11 +1,15 @@
 import { Model } from "sequelize";
 
 export class Event extends Model {
-  declare public readonly id: number;
-  declare public name: string;
-  declare public start: Date;
-  declare public finish: Date;
-  declare public location: string;
+  public declare readonly id: number;
+  public declare name: string;
+  public declare start: Date;
+  public declare finish: Date;
+  public declare location: string;
+  public declare price: number;
+  public declare inviteeLimit: number;
+  public declare createdAt: Date;
+  public declare updatedAt: Date;
 }
 
 export interface EventDTO {
@@ -14,4 +18,6 @@ export interface EventDTO {
   start?: Date | string;
   finish?: Date | string;
   location?: string;
+  price?: number;
+  attendantLimit?: number;
 }

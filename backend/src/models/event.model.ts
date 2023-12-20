@@ -28,6 +28,14 @@ export const EventModel = Event.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    inviteeLimit: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     tableName: "event",
@@ -40,11 +48,11 @@ export const EventModel = Event.init(
 EventModel.belongsToMany(InviteeModel, {
   through: "event_invitee",
   uniqueKey: "eventId",
-  foreignKey: "eventId"
+  foreignKey: "eventId",
 });
 
 InviteeModel.belongsToMany(EventModel, {
   through: "event_invitee",
   uniqueKey: "inviteeId",
-  foreignKey: "inviteeId"
+  foreignKey: "inviteeId",
 });

@@ -66,12 +66,12 @@ class EventService {
 
     const event: Event = await EventModel.create(eventParamsNoId, { transaction: t });
 
+    const { createdAt: a1, updatedAt: a2, ...eventValues } = event.dataValues;
+
     return {
-      id: event.id,
-      name: event.name,
+      ...eventValues,
       start: event.start.toLocaleDateString(),
       finish: event.finish.toLocaleDateString(),
-      location: event.location,
     };
   }
 
@@ -104,11 +104,9 @@ class EventService {
     }
 
     return {
-      id: eventParams.id,
-      name: eventParams.name,
+      ...eventParams,
       start: startDateString,
       finish: finishDateString,
-      location: eventParams.location,
     };
   }
 
