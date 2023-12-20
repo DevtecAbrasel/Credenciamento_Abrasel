@@ -27,7 +27,7 @@ class ColorPalette {
 
   setColors() {
     // Escolhe um matiz (hue) aleatório entre 220 e 360
-    this.hue = ~~random(220, 360);
+    this.hue = ~~random(210, 210);  
     this.complimentaryHue1 = this.hue + 30;
     this.complimentaryHue2 = this.hue + 60;
     // Define uma saturação e luminosidade fixas
@@ -227,3 +227,80 @@ document
       orb.fill = colorPalette.randomColor();
     });
   });
+
+
+/************************************************************************************ */
+  
+  // Importar módulos necessários
+const express = require('express');
+const { Sequelize, DataTypes } = require('sequelize');
+
+// Criar uma aplicação Express
+const app = express();
+const PORT = 3000;
+
+// Definir o modelo Sequelize para Evento
+const EventoModel = sequelize.define('Evento', {
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  // Adicionar outros campos conforme necessário
+});
+
+// Definir o modelo Sequelize para Recepcionista
+const RecepcionistaModel = sequelize.define('Recepcionista', {
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  celular: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: 'login',
+  },
+  senha: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  eventoId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    unique: 'login',
+    references: {
+      model: EventoModel,
+      key: 'id',
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  },
+});
+
+// Definir associações
+EventoModel.hasMany(RecepcionistaModel, { foreignKey: 'eventoId' });
+RecepcionistaModel.belongsTo(EventoModel, { foreignKey: 'eventoId' });
+
+// Configurar middleware do Express para analisar solicitações JSON
+app.use(express.json());
+
+// Definir pontos de extremidade da API
+app.get('/api/recepcionistas', async (req, res) => {
+  // Buscar todos os recepcionistas
+  const recepcionistas = await RecepcionistaModel.findAll();
+  res.json(recepcionistas);
+});
+
+// Mais pontos de extremidade para criar, atualizar, excluir, etc.
+
+// Iniciar o servidor
+app.listen(PORT, () => {
+  console.log(`O servidor está rodando em http://localhost:${PORT}`);
+});

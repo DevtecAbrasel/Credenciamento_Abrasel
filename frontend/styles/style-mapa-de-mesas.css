@@ -13,7 +13,9 @@ body {
   font-family: var(--font-family);
   color: var(--dark-color);
   background: #181818;
+  
 }
+
 
 ul {
   margin: 0 0 20px;
@@ -109,8 +111,8 @@ h1 span {
   border-radius: 3px;
   overflow: hidden;
   vertical-align: middle;
-  max-width: 150px;
-  min-width: 20%;
+  max-width: 100%;
+  min-width: 90%;
   flex-basis: auto;
   flex-shrink: 0.25;
   flex-grow: 2;
@@ -124,7 +126,7 @@ h1 span {
 }
 
 #draggable {
-  width: 100%;
+  width: 100%; 
 }
 
 #tables {
@@ -135,14 +137,15 @@ h1 span {
 
 .snap_target {
   position: relative;
-  min-height: 130px;
+  min-height: 100%;
   padding: 10px 5px 45px 5px;
-  width: 30%;
+  min-width: 45%;
+  width: 200px;
   float: left;
   background-color: #d0d0d0;
   border-radius: 20px;
   margin-left: 2%;
-  color: #464646;
+  color: #2c2c2c;
   border: 2px solid transparent;
   padding-bottom: 40px;
   transition: height 200ms ease-in-out;
@@ -199,12 +202,17 @@ input#guest_names {
   color: #232323;
   padding: 0 10px;
   min-width: 15%;
+  color: var(--light-color);
+  background: var(--dark-color);
 }
 
 button {
   line-height: 2.2;
 }
-
+:root {
+  --dark-color: hsl(var(--hue), 100%, 9%);
+  --light-color: hsl(var(--hue), 95%, 98%);
+}
 #table {
   background-color: #93f55e;
   color: #232323;
@@ -213,6 +221,8 @@ button {
   border: 0px;
   margin-left: 2.5%;
   min-width: 15%;
+  color: var(--light-color);
+  background: var(--dark-color);
 }
 
 #export {
@@ -225,9 +235,8 @@ button {
 
 .export_area {
   clear: both;
-  width: 105%;
-  margin-left: -2.5%;
-  border-top: 1px solid #ddd;
+  width: 100%;
+  border-top: 1px solid #000000;
   margin-top: 50px;
   padding: 20px 0 30px;
 }
@@ -279,7 +288,6 @@ input::placeholder {
 
 .overlay {
   max-width: 1140px;
-  max-height: 640px;
   align-items: center;
   background: rgba(255, 255, 255, 0.375);
   box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
