@@ -65,6 +65,8 @@ function updateTable(events) {
     nomeEventoCell.innerHTML = event.name;
     dataCell.innerHTML = new Date(event.start).toLocaleDateString();
     localCell.innerHTML = event.location;
+    locationCell.innerHTML = event.location
+
 
     // Adiciona botões na célula apropriada
     const addButton = document.createElement("button");
