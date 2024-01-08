@@ -7,6 +7,113 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"rel="stylesheet"/>
   <link rel="stylesheet" href="styles/style-list-checkin.css">
+  
+</head>
+<body>
+
+  <div class="all">
+    <div class="buttons">
+      <div class="one">
+        <a href="login.html"><button class="curve overlay__btn overlay__btn--colors">Sair</button></a>
+      </div>
+    </div>
+  </div>
+
+  <canvas class="orb-canvas"></canvas>
+
+  <section>
+    <h1>Lista de check-in</h1>
+  
+    <!-- Adicionando o campo de busca -->
+    <div class="search-container">
+      <label for="search">Buscar convidado:</label>
+      <input type="text" id="search" placeholder="Digite o nome do convidado">
+    </div>
+
+    <div class="wrapper-checkbox" id="checkboxContainer">
+      <!-- Os checkboxes serão adicionados dinamicamente aqui -->
+    </div>
+  </section>
+
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="list-checkin.js"></script>
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", async function () {
+      try {
+        const events = await fetchEvents();
+        console.log("Eventos recebidos:", events);
+        updateCheckboxes(events);
+      } catch (error) {
+        console.error("Erro durante a obtenção de eventos:", error.message);
+      }
+    });
+
+    async function fetchEvents() {
+      const apiUrl = "http://localhost:8080/v1/invitee";
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erro na requisição: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Erro durante a solicitação fetch:", error.message);
+        throw error;
+      }
+    }
+
+    function updateCheckboxes(events) {
+      const checkboxContainer = document.getElementById("checkboxContainer");
+
+      // Limpa o container antes de adicionar os novos checkboxes
+      checkboxContainer.innerHTML = "";
+
+      events.forEach((invitee, index) => {
+        // Cria um novo checkbox para cada evento
+        const checkbox = document.createElement("div");
+        checkbox.classList.add("checkbox");
+
+        // Adiciona os dados relevantes ao checkbox
+        checkbox.innerHTML = `
+          <div class="figure-container">
+            <div class="figure face"></div>
+          </div>
+          <div class="text">
+            <span id="name${index}">${invitee.name}
+            <br>
+            <span id="role${index}"style="margin-left:-10px">${invitee.role},</span>
+            <span id="company${index}"style="margin-left:30px">${invitee.company}</span>
+          </div>
+        `;
+
+        // Adiciona o checkbox ao container
+        checkboxContainer.appendChild(checkbox);
+      });
+    }
+  </script>
+</body>
+</html>
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de check-in</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"rel="stylesheet"/>
+  <link rel="stylesheet" href="styles/style-list-checkin.css">
   <style>
     /* Adicione estilos adicionais conforme necessário */
     .search-container {
@@ -33,7 +140,7 @@
   <section>
     <h1>Lista de check-in</h1>
   
-    <!-- Adicionando o campo de busca -->
+     Adicionando o campo de busca 
     <div class="search-container">
       <label for="search">Buscar convidado:</label>
       <input type="text" id="search" placeholder="Digite o nome do convidado">
@@ -99,5 +206,4 @@
   <script src="list-checkin.js"></script>
   <script type="module" src="list-checkin.js"></script>
 </body>
-</html>
- 
+</html> -->
