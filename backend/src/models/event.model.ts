@@ -36,12 +36,9 @@ export const EventModel = Event.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-<<<<<<< Updated upstream
     origin: {
       type: DataTypes.STRING,
     },
-=======
->>>>>>> Stashed changes
   },
   {
     tableName: "event",

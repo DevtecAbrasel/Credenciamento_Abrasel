@@ -8,10 +8,7 @@ export class Event extends Model {
   public declare location: string;
   public declare price: number;
   public declare inviteeLimit: number;
-<<<<<<< Updated upstream
   public declare origin: string;
-=======
->>>>>>> Stashed changes
   public declare createdAt: Date;
   public declare updatedAt: Date;
 }
@@ -24,8 +21,5 @@ export interface EventDTO {
   location?: string;
   price?: number;
   attendantLimit?: number;
-<<<<<<< Updated upstream
   origin?: string;
-=======
->>>>>>> Stashed changes
 }
