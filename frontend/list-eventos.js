@@ -18,11 +18,11 @@ document.getElementById("addMovieForm").addEventListener("submit", function(even
   const horario = document.getElementById("horario").value;
   const sR = document.getElementById("sR").value;
   const local = document.getElementById("local").value;
-  const duracao = document.getElementById("duracao").value;
-  const valor = document.getElementById("valor").value;
+  // const duracao = document.getElementById("duracao").value;
+  const price = document.getElementById("valor").value;
   const limitePessoas = document.getElementById("limitePessoas").value;
-  const programacao = document.getElementById("programacao").value;
-  const convidados = document.getElementById("convidados").value;
+  // const programacao = document.getElementById("programacao").value;
+  // const convidados = document.getElementById("convidados").value;
   
   
   // Crie uma nova linha na tabela com os valores do novo evento
@@ -33,22 +33,22 @@ document.getElementById("addMovieForm").addEventListener("submit", function(even
   const horarioCell = newRow.insertCell(2);
   const sRCell = newRow.insertCell(3);
   const localCell = newRow.insertCell(4);
-  const duracaoCell = newRow.insertCell(5);
-  const valorCell = newRow.insertCell(6);
+  // const duracaoCell = newRow.insertCell(5);
+  const priceCell = newRow.insertCell(6);
   const limitePessoasCell = newRow.insertCell(7);
-  const programacaoCell = newRow.insertCell(8);
-  const convidadosCell = newRow.insertCell(9);
+  // const programacaoCell = newRow.insertCell(8);
+  // const convidadosCell = newRow.insertCell(9);
   
   nomeEventoCell.innerHTML = nomeEvento;
   dataCell.innerHTML = data;
   horarioCell.innerHTML = horario;
   sRCell.innerHTML = sR;
   localCell.innerHTML = local;
-  duracaoCell.innerHTML = duracao;
-  valorCell.innerHTML = valor;
+  // duracaoCell.innerHTML = duracao;
+  priceCellCell.innerHTML = valor;
   limitePessoasCell.innerHTML = limitePessoas;
-  programacaoCell.innerHTML = programacao;
-  convidadosCell.innerHTML = convidados;
+  // programacaoCell.innerHTML = programacao;
+  // convidadosCell.innerHTML = convidados;
   
   // Feche o modal
   document.getElementById("modal").style.display = "none";
@@ -56,6 +56,9 @@ document.getElementById("addMovieForm").addEventListener("submit", function(even
   // Limpe os campos do formulário
   document.getElementById("addMovieForm").reset();
 });
+
+//-----------------------------------------------------------------------------------------------------------------------------------------//
+
 
 import * as PIXI from "https://cdn.skypack.dev/pixi.js@5.x";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur@3.2.0";

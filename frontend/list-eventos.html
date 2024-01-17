@@ -50,11 +50,8 @@
           <th scope="col">Horario</th>
           <th scope="col">S/R</th>
           <th scope="col">Local</th>
-          <!-- <th scope="col">Duraçao</th> -->
           <th scope="col">Valor</th>
           <th scope="col">Limite de pessoas</th>
-          <!-- <th scope="col">Programação</th>
-          <th scope="col">Lista de convidados</th> -->
           <th scope="col">Mapa de mesas</th>
           <th scope="col">Adicionar recepcionista</th>
         </tr>
@@ -65,17 +62,14 @@
         </tr>
       </tfoot>
       <tbody id="eventTableBody">
-        <tr>
+        <tr> 
           <th scope="row">Evento check-in</th>
           <td data-title="Data">17/10/2023</td>
           <td data-title="Horario">15:00-18:00</td>
           <td data-title="S/R" data-type="currency">Sec</td>
           <td data-title="Local" data-type="currency">BH</td>
-          <!-- <td data-title="Duração" data-type="currency">3 horas</td> -->
           <td data-title="Valor" data-type="currency">R$0,00</td>
           <td data-title="Limite de pessoas" data-type="currency">500</td>
-          <!-- <td data-title="Programação" data-type="currency">XXX</td>
-          <td data-title="Lista de convidados" data-type="currency">X</td> -->
           <td data-title="Mapa de mesas" data-type="currency"><button class="overlay__btn overlay__btn--colors">
               <a href="mapa-de-mesas.html">
                 Mesas
@@ -88,7 +82,6 @@
               </a>
             </button></td>
         </tr>
-        <!-- Adicione outras linhas da tabela conforme necessário -->
       </tbody>
     </table>
 
@@ -114,29 +107,11 @@
           <label for="movieDomesticGross">Local:</label>
           <input type="text" id="local" name="movieDomesticGross" class="text-input" required>
           <br>
-          <!-- <label for="movieForeignGross">Duração:</label>
-          <input type="text" id="duracao" name="movieForeignGross" class="text-input" required>
-          <br> -->
           <label for="movieBudget">Valor:</label>
           <input type="text" id="valor" name="movieBudget" class="text-input" required>
           <br>
           <label for="movieBudget">Limite de pessoas:</label>
           <input type="text" id="limitePessoas" name="movieBudget" class="text-input" required>
-          <br>
-          <!-- <div class="input-file-container"> Programação:
-            <input type="file" id="programacao" name="movieBudget" class="input-file input-file-trigger" required>
-            <label for="movieBudget" class="input-file-trigger overlay__btn overlay__btn--colors">Adicionar
-              documento</label>
-            </input>
-          </div> -->
-          <br>
-
-          <!-- <div> Lista de Convidados:
-            <input type="file" id="convidados" name="movieBudget" class="input-file" required>
-            <label for="movieBudget" class="input-file-trigger overlay__btn overlay__btn--colors">Adicionar
-              documento</label>
-            </input>
-          </div> -->
           <br>
           <br>
           <button type="submit" class="overlay__btn overlay__btn--colors">Adicionar</button>
@@ -150,6 +125,67 @@
   <!-- partial -->
   <script type="module" src="list-eventos.js"></script>
   <script src="config/script-event.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", (event) => {
+  document.getElementById("openModalBtn").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "block";
+  });
+
+  document.getElementById("closeModalBtn").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "none";
+  });
+
+  document.getElementById("addMovieForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const nomeEvento = document.getElementById("nomeEvento").value;
+    const data = document.getElementById("data").value;
+    const horario = document.getElementById("horario").value;
+    const sR = document.getElementById("sR").value;
+    const local = document.getElementById("local").value;
+    const valor = document.getElementById("valor").value;
+    const limitePessoas = document.getElementById("limitePessoas").value;
+
+    const newEvent = {
+      nomeEvento: nomeEvento,
+      data: data,
+      horario: horario,
+      sR: sR,
+      local: local,
+      valor: valor,
+      limitePessoas: limitePessoas,
+    };
+
+    const apiUrl = "http://localhost:8080/v1/event";
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(newEvent),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erro na requisição: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Evento adicionado com sucesso:", data);
+
+        document.getElementById("modal").style.display = "none";
+        document.getElementById("addMovieForm").reset();
+      })
+      .catch(error => {
+        console.error("Erro durante a requisição fetch:", error.message);
+      });
+  });
+
+  fetchEvents();
+});
+
+  </script>
 </body>
 
 </html>
