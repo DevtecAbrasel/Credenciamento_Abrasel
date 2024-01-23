@@ -1,60 +1,46 @@
-// Abrir modal
-document.getElementById("openModalBtn").addEventListener("click", function() {
-  document.getElementById("modal").style.display = "block";
-});
+window.addEventListener("DOMContentLoaded", (event) => {
+  document.getElementById("openModalBtn").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "block";
+  });
 
-// Fechar modal
-document.getElementById("closeModalBtn").addEventListener("click", function() {
-  document.getElementById("modal").style.display = "none";
-});
+  document.getElementById("closeModalBtn").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "none";
+  });
 
-// Adicionar um novo evento
-document.getElementById("addMovieForm").addEventListener("submit", function(event) {
-  event.preventDefault();
+  document.getElementById("addMovieForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const nomeEvento = document.getElementById("nomeEvento").value;
+    const data = document.getElementById("data").value;
+    const horario = document.getElementById("horario").value;
+    const sR = document.getElementById("sR").value;
+    const local = document.getElementById("local").value;
+    const price = document.getElementById("valor").value;
+    const limitePessoas = document.getElementById("limitePessoas").value;
+
+    const table = document.querySelector("table tbody");
+    const newRow = table.insertRow(table.rows.length);
+    const nomeEventoCell = newRow.insertCell(0);
+    const dataCell = newRow.insertCell(1);
+    const horarioCell = newRow.insertCell(2);
+    const sRCell = newRow.insertCell(3);
+    const localCell = newRow.insertCell(4);
+    const priceCell = newRow.insertCell(5); // Ajuste aqui
+    const limitePessoasCell = newRow.insertCell(6); // Ajuste aqui
   
-  // Obter os valores do formulário
-  const nomeEvento = document.getElementById("nomeEvento").value;
-  const data = document.getElementById("data").value;
-  const horario = document.getElementById("horario").value;
-  const sR = document.getElementById("sR").value;
-  const local = document.getElementById("local").value;
-  // const duracao = document.getElementById("duracao").value;
-  const price = document.getElementById("valor").value;
-  const limitePessoas = document.getElementById("limitePessoas").value;
-  // const programacao = document.getElementById("programacao").value;
-  // const convidados = document.getElementById("convidados").value;
-  
-  
-  // Crie uma nova linha na tabela com os valores do novo evento
-  const table = document.querySelector("table tbody");
-  const newRow = table.insertRow(table.rows.length);
-  const nomeEventoCell = newRow.insertCell(0);
-  const dataCell = newRow.insertCell(1);
-  const horarioCell = newRow.insertCell(2);
-  const sRCell = newRow.insertCell(3);
-  const localCell = newRow.insertCell(4);
-  // const duracaoCell = newRow.insertCell(5);
-  const priceCell = newRow.insertCell(6);
-  const limitePessoasCell = newRow.insertCell(7);
-  // const programacaoCell = newRow.insertCell(8);
-  // const convidadosCell = newRow.insertCell(9);
-  
-  nomeEventoCell.innerHTML = nomeEvento;
-  dataCell.innerHTML = data;
-  horarioCell.innerHTML = horario;
-  sRCell.innerHTML = sR;
-  localCell.innerHTML = local;
-  // duracaoCell.innerHTML = duracao;
-  priceCellCell.innerHTML = valor;
-  limitePessoasCell.innerHTML = limitePessoas;
-  // programacaoCell.innerHTML = programacao;
-  // convidadosCell.innerHTML = convidados;
-  
-  // Feche o modal
-  document.getElementById("modal").style.display = "none";
-  
-  // Limpe os campos do formulário
-  document.getElementById("addMovieForm").reset();
+    nomeEventoCell.innerHTML = nomeEvento;
+    dataCell.innerHTML = data;
+    horarioCell.innerHTML = horario;
+    sRCell.innerHTML = sR;
+    localCell.innerHTML = local;
+    priceCell.innerHTML = price; // Ajuste aqui
+    limitePessoasCell.innerHTML = limitePessoas;
+
+    document.getElementById("modal").style.display = "none";
+    document.getElementById("addMovieForm").reset();
+  });
+ 
+  fetchEvents();
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//

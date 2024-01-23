@@ -54,15 +54,14 @@
           <th scope="col">Limite de pessoas</th>
           <th scope="col">Mapa de mesas</th>
           <th scope="col">Adicionar recepcionista</th>
+          <th scope="col">Lista de convidados</th>
         </tr>
       </thead>
       <tfoot>
-        <tr>
-
-        </tr>
+        <tr></tr>
       </tfoot>
       <tbody id="eventTableBody">
-        <tr> 
+        <tr>
           <th scope="row">Evento check-in</th>
           <td data-title="Data">17/10/2023</td>
           <td data-title="Horario">15:00-18:00</td>
@@ -70,7 +69,8 @@
           <td data-title="Local" data-type="currency">BH</td>
           <td data-title="Valor" data-type="currency">R$0,00</td>
           <td data-title="Limite de pessoas" data-type="currency">500</td>
-          <td data-title="Mapa de mesas" data-type="currency"><button class="overlay__btn overlay__btn--colors">
+          <td data-title="Mapa de mesas" data-type="currency"><button
+              class="overlay__btn overlay__btn--colors">
               <a href="mapa-de-mesas.html">
                 Mesas
               </a>
@@ -92,26 +92,26 @@
         <!-- Formulário para adicionar um novo evento -->
         <form id="addMovieForm">
           <br>
-          <label for="movieTitle">Nome do Evento:</label>
-          <input type="text" id="nomeEvento" name="movieTitle" class="text-input" required>
+          <label for="nomeEvento">Nome do Evento:</label>
+          <input type="text" id="nomeEvento" name="nomeEvento" class="text-input" required>
           <br>
-          <label for="movieReleased">Data:</label>
-          <input type="number" id="data" name="movieReleased" class="text-input" required>
+          <label for="data">Data:</label>
+          <input type="date" id="data" name="data" class="text-input" required>
           <br>
-          <label for="movieStudio">Horario:</label>
-          <input type="text" id="horario" name="movieStudio" class="text-input" required>
+          <label for="horario">Horario:</label>
+          <input type="text" id="horario" name="horario" class="text-input" required>
           <br>
-          <label for="movieWorldwideGross">S/R:</label>
-          <input type="text" id="sR" name="movieWorldwideGross" class="text-input" required>
+          <label for="sR">S/R:</label>
+          <input type="text" id="sR" name="sR" class="text-input" required>
           <br>
-          <label for="movieDomesticGross">Local:</label>
-          <input type="text" id="local" name="movieDomesticGross" class="text-input" required>
+          <label for="local">Local:</label>
+          <input type="text" id="local" name="local" class="text-input" required>
           <br>
-          <label for="movieBudget">Valor:</label>
-          <input type="text" id="valor" name="movieBudget" class="text-input" required>
+          <label for="valor">Valor:</label>
+          <input type="text" id="valor" name="valor" class="text-input" required>
           <br>
-          <label for="movieBudget">Limite de pessoas:</label>
-          <input type="text" id="limitePessoas" name="movieBudget" class="text-input" required>
+          <label for="limitePessoas">Limite de pessoas:</label>
+          <input type="text" id="limitePessoas" name="limitePessoas" class="text-input" required>
           <br>
           <br>
           <button type="submit" class="overlay__btn overlay__btn--colors">Adicionar</button>
@@ -127,64 +127,64 @@
   <script src="config/script-event.js"></script>
   <script>
     window.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("openModalBtn").addEventListener("click", function() {
-    document.getElementById("modal").style.display = "block";
-  });
-
-  document.getElementById("closeModalBtn").addEventListener("click", function() {
-    document.getElementById("modal").style.display = "none";
-  });
-
-  document.getElementById("addMovieForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const nomeEvento = document.getElementById("nomeEvento").value;
-    const data = document.getElementById("data").value;
-    const horario = document.getElementById("horario").value;
-    const sR = document.getElementById("sR").value;
-    const local = document.getElementById("local").value;
-    const valor = document.getElementById("valor").value;
-    const limitePessoas = document.getElementById("limitePessoas").value;
-
-    const newEvent = {
-      nomeEvento: nomeEvento,
-      data: data,
-      horario: horario,
-      sR: sR,
-      local: local,
-      valor: valor,
-      limitePessoas: limitePessoas,
-    };
-
-    const apiUrl = "http://localhost:8080/v1/event";
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(newEvent),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Erro na requisição: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log("Evento adicionado com sucesso:", data);
-
-        document.getElementById("modal").style.display = "none";
-        document.getElementById("addMovieForm").reset();
-      })
-      .catch(error => {
-        console.error("Erro durante a requisição fetch:", error.message);
+      document.getElementById("openModalBtn").addEventListener("click", function() {
+        document.getElementById("modal").style.display = "block";
       });
-  });
 
-  fetchEvents();
-});
+      document.getElementById("closeModalBtn").addEventListener("click", function() {
+        document.getElementById("modal").style.display = "none";
+      });
 
+      document.getElementById("addMovieForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const nomeEvento = document.getElementById("nomeEvento").value;
+        const data = document.getElementById("data").value;
+        const horario = document.getElementById("horario").value;
+        const sR = document.getElementById("sR").value;
+        const local = document.getElementById("local").value;
+        const valor = document.getElementById("valor").value;
+        const limitePessoas = document.getElementById("limitePessoas").value;
+
+        const newEvent = {
+          nomeEvento: nomeEvento,
+          data: data,
+          horario: horario,
+          sR: sR,
+          local: local,
+          valor: valor,
+          limitePessoas: limitePessoas,
+        };
+
+        const apiUrl = "http://localhost:8080/v1/event";
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(newEvent),
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Erro na requisição: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log("Evento adicionado com sucesso:", data);
+
+            document.getElementById("modal").style.display = "none";
+            document.getElementById("addMovieForm").reset();
+          })
+          .catch(error => {
+            console.error("Erro durante a requisição fetch:", error.message);
+          });
+      });
+
+      fetchEvents();
+    });
+    
   </script>
 </body>
 

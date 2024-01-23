@@ -63,7 +63,7 @@ h1 span {
 }
 
 .controls {
-  padding: 20px 2% 10px;
+  padding: 20px 10px;
   margin-bottom: 40px;
   border-radius: 2rem 2rem 0px 0px;
   box-shadow: 0 3px 1px rgba(50, 50, 50, 0.2);
@@ -293,4 +293,33 @@ input::placeholder {
   box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
   border-radius: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+
+.overlay__btns {
+  width: 100%;
+  max-width: 30rem;
+  display: flex;
+}
+
+.overlay__btn {
+  width: 50%;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--light-color);
+  background: var(--dark-color);
+  border: none;
+  border-radius: 0.5rem;
+  transition: transform 150ms ease;
+  outline-color: hsl(var(--hue), 95%, 50%);
+  margin-right: 0.75rem;
+  margin-top: 10px;
+}
+
+:root {
+  --dark-color: hsl(var(--hue), 100%, 9%);
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Mapa de mesas</title>
@@ -7,7 +8,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" href="styles\style-mapa-de-mesas.css">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
+
 <body>
   <canvas class="orb-canvas"></canvas>
 
@@ -17,7 +20,7 @@
       <input placeholder="Adicione os convidados aqui (Use vírgula para separar)" type="text" id="guest_names">
       <button id="add_guests" class="guest_names" for="guest_names">Add convidado</button>
       <button id="table">Add Mesa</button>
-      <button id="export">Export</button>
+      <button id="generateImage" class="overlay__btn overlay__btn--colors">Baixar imagem</button>
     </div>
 
     <ul id="sortable" class="guests"></ul>
@@ -90,6 +93,27 @@
       // Chama a função para tornar os itens arrastáveis após atualizar os checkboxes
       start_drag();
     }
+
+    document.getElementById("generateImage").addEventListener("click", function () {
+      generateImageAndDownload();
+    });
+
+    function generateImageAndDownload() {
+      const container = document.querySelector(".overlay");
+
+      html2canvas(container).then(function (canvas) {
+        // Cria um link para baixar a imagem
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL();
+        link.download = "mapa-de-mesas.png";
+
+        // Adiciona o link ao corpo da página e simula um clique para iniciar o download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    }
   </script>
 </body>
+
 </html>

@@ -38,68 +38,90 @@
   <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script src="list-checkin.js"></script>
   <script type="module">
-    document.addEventListener("DOMContentLoaded", async function () {
-      try {
-        const events = await fetchEvents();
-        console.log("Eventos recebidos:", events);
-        updateCheckboxes(events);
-      } catch (error) {
-        console.error("Erro durante a obtenção de eventos:", error.message);
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const searchInput = document.getElementById('search');
+  const checkboxes = document.querySelectorAll('.checkbox');
+
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value.toLowerCase();
+
+    checkboxes.forEach(function (checkbox) {
+      const guestName = checkbox.querySelector('.text span').textContent.toLowerCase();
+
+      if (guestName.includes(searchTerm)) {
+        checkbox.style.display = 'block';
+      } else {
+        checkbox.style.display = 'none';
       }
     });
+  });
+});
 
-    async function fetchEvents() {
-      const apiUrl = "http://localhost:8080/v1/invitee";
+document.addEventListener("DOMContentLoaded", async function () {
+  try {
+    const events = await fetchEvents();
+    console.log("Eventos recebidos:", events);
+    updateCheckboxes(events);
+  } catch (error) {
+    console.error("Erro durante a obtenção de eventos:", error.message);
+  }
+});
 
-      try {
-        const response = await fetch(apiUrl, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+async function fetchEvents() {
+  const apiUrl = "http://localhost:8080/v1/invitee";
 
-        if (!response.ok) {
-          throw new Error(`Erro na requisição: ${response.status}`);
-        }
+  try {
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error("Erro durante a solicitação fetch:", error.message);
-        throw error;
-      }
+    if (!response.ok) {
+      throw new Error(`Erro na requisição: ${response.status}`);
     }
 
-    function updateCheckboxes(events) {
-      const checkboxContainer = document.getElementById("checkboxContainer");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Erro durante a solicitação fetch:", error.message);
+    throw error;
+  }
+}
 
-      // Limpa o container antes de adicionar os novos checkboxes
-      checkboxContainer.innerHTML = "";
+function updateCheckboxes(events) {
+  const checkboxContainer = document.getElementById("checkboxContainer");
 
-      events.forEach((invitee, index) => {
-        // Cria um novo checkbox para cada evento
-        const checkbox = document.createElement("div");
-        checkbox.classList.add("checkbox");
+  // Clear the container before adding the new checkboxes
+  checkboxContainer.innerHTML = "";
 
-        // Adiciona os dados relevantes ao checkbox
-        checkbox.innerHTML = `
-          <div class="figure-container">
-            <div class="figure face"></div>
-          </div>
-          <div class="text">
-            <span id="name${index}">${invitee.name}
-            <br>
-            <span id="role${index}"style="margin-left:-10px">${invitee.role},</span>
-            <span id="company${index}"style="margin-left:30px">${invitee.company}</span>
-          </div>
-        `;
-//ADICIONAR MESA AO CONVIDADO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // Adiciona o checkbox ao container
-        checkboxContainer.appendChild(checkbox);
-      });
-    }
+  events.forEach((invitee, index) => {
+    // Create a new checkbox for each event
+    const checkbox = document.createElement("div");
+    checkbox.classList.add("checkbox");
+
+    // Add relevant data to the checkbox
+    checkbox.innerHTML = `
+      <div class="figure-container">
+        <div class="figure face"></div>
+      </div>
+      <div class="text">
+        <span id="name${index}">${invitee.name}
+        <br>
+        <span id="role${index}" style="margin-left:-10px">${invitee.role},</span>
+        <span id="company${index}" style="margin-left:30px">${invitee.company}</span>
+      </div>
+    `;
+
+    // Add the checkbox to the container
+    checkboxContainer.appendChild(checkbox);
+  });
+}
+
   </script>
 </body>
 </html>

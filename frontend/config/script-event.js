@@ -85,10 +85,23 @@ function updateTable(events) {
       );
     });
 
+    const addButton3 = document.createElement("button");
+    addButton3.className = "overlay__btn overlay__btn--colors";
+    addButton3.innerText = "lista de convidados";
+    addButton3.addEventListener("click", () => {
+      window.location.href = 'list-checkin.html';
+      console.log(
+        "Botão de abrir add recep para o evento:",
+        event
+      );
+    });
+
     const buttonsCell2 = newRow.insertCell(7);
     buttonsCell2.appendChild(addButton2);
     const buttonsCell1 = newRow.insertCell(8);
     buttonsCell1.appendChild(addButton1);
+    const buttonsCell3 = newRow.insertCell(9);
+    buttonsCell3.appendChild(addButton3);
   });
 }
 
